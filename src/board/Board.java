@@ -14,7 +14,10 @@ public class Board {
 	ArrayList<Piece> wPieces = new ArrayList<Piece>();
 	ArrayList<Piece> bPieces = new ArrayList<Piece>();
 	Piece[][] board = new Piece[8][8];
-	char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}; 
+	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}; 
+	/**
+	 * Instantiates Board object filling it with chess pieces
+	 */
 	public Board() {
 		populateBoard();
 	}
@@ -57,7 +60,11 @@ public class Board {
 			}
 		}
 	}
-	
+	/**
+	 * Gets the chess piece at the given FileRank location
+	 * @param fr
+	 * @return The piece located at the given FileRank
+	 */
 	public Piece get(FileRank fr) {
 		int file = indexOf("" + fr.file);
 		int rank = 7 - (fr.rank - 1);

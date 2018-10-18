@@ -9,7 +9,11 @@ public abstract class Piece {
 		this.team = team;
 		this.type = type;
 	}
-	
+	/**
+	 * 
+	 * @return 'b' if the Piece is on the black team, or 'w' if the piece
+	 * is on the white time
+	 */
 	public char getTeam() {
 		return team;
 	}
