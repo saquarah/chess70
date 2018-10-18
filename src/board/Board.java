@@ -1,18 +1,28 @@
 package board;
 
-import pieces.*;
+import java.util.ArrayList;
+
+import pieces.Bishop;
+import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
+import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 
 public class Board {
+	ArrayList<Piece> wPieces = new ArrayList<Piece>();
+	ArrayList<Piece> bPieces = new ArrayList<Piece>();
 	Piece[][] board = new Piece[8][8];
 	char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}; 
 	public Board() {
 		populateBoard();
 	}
-	private void populateBoard() {
+	private void populateBoard() { // This initializes the board with pieces
 		board[0][0] = new Rook('w', 'R');
 		board[0][1] = new Knight('w', 'N');
 		board[0][2] = new Bishop('w', 'B');
-		board[0][3] = new Queen('w', 'Q');
+		board[0][3] = new Queen('w', 'Q'); 
 		board[0][4] = new King('w', 'K');
 		board[0][5] = new Bishop('w', 'B');
 		board[0][6] = new Knight('w', 'N');
@@ -20,6 +30,12 @@ public class Board {
 		
 		for(int i = 0; i < 8; i++) {
 			board[1][i] = new Pawn('w', 'p');
+		}
+		
+		for(int i = 0; i < 2; i++) { // adds all white pieces to array
+			for(int j = 0; j < 8; j++) {
+				wPieces.add(board[i][j]);
+			}
 		}
 		
 		board[7][0] = new Rook('b', 'R');
@@ -34,10 +50,18 @@ public class Board {
 		for(int i = 0; i < 8; i++) {
 			board[6][i] = new Pawn('b', 'p');
 		}
+		
+		for(int i = 7; i > 5; i--) {
+			for(int j = 0; j < 8; j++) {
+				bPieces.add(board[i][j]);
+			}
+		}
 	}
 	
 	public Piece get(FileRank fr) {
-		return board[indexOf("" + fr.file)][fr.rank - 1];
+		int file = indexOf("" + fr.file);
+		int rank = 7 - (fr.rank - 1);
+		return board[rank][file];
 	}
 
 	private int indexOf(String c) {
