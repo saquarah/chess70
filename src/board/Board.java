@@ -6,9 +6,11 @@ public class Board {
 	Piece[][] board = new Piece[8][8];
 	char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}; 
 	public Board() {
+		populateBoard();
+	}
+	private void populateBoard() {
 		
 	}
-	
 	public void printBoard() {
 		for(int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++) {

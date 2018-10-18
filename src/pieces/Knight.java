@@ -2,9 +2,9 @@ package pieces;
 
 import board.FileRank;
 
-public class Pawn extends Piece {
+public class Knight extends Piece {
 
-	public Pawn(char team, char type) {
+	public Knight(char team, char type) {
 		super(team, type);
 		// TODO Auto-generated constructor stub
 	}
