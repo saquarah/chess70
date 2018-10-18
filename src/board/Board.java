@@ -35,6 +35,20 @@ public class Board {
 			board[6][i] = new Pawn('b', 'p');
 		}
 	}
+	
+	public Piece get(FileRank fr) {
+		return board[indexOf("" + fr.file)][fr.rank - 1];
+	}
+
+	private int indexOf(String c) {
+		for(int i = 0; i < file.length; i++) {
+			if(c.charAt(0) == file[i]) return i;
+		}
+		return -1;
+	}
+	/**
+	 * Prints the chessboard in the required format
+	 */
 	public void printBoard() {
 		for(int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++) {
