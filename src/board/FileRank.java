@@ -9,6 +9,14 @@ public class FileRank {
 		this.rank = rank;
 	}
 	
+	public char getFile() {
+		return file;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
 	public String toString() {
 		String result = "File: " + file;
 		result += "\nRank: " + rank;
