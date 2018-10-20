@@ -1,13 +1,21 @@
 package pieces;
 
+import board.Board;
 import board.FileRank;
 
 public abstract class Piece {
-	private char team;
+	char team;
 	private char type;
+	private static Board board; // This is the same board created for the game. It will be used to determine legal moves, etc.
 	public Piece(char team, char type) {
 		this.team = team;
 		this.type = type;
+	}
+	public static void setBoard(Board newBoard) {
+		board = newBoard;
+	}
+	public static Board getBoard() {
+		return board;
 	}
 	/**
 	 * 

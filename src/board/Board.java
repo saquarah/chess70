@@ -59,6 +59,7 @@ public class Board {
 				bPieces.add(board[i][j]);
 			}
 		}
+		Piece.setBoard(this);
 	}
 	/**
 	 * Gets the chess piece at the given FileRank location
@@ -100,5 +101,15 @@ public class Board {
 			System.out.print(" " + file[i] + " ");
 		}
 	}
-
+	/**
+	 * This is just a method I created for debugging purposes, ignore.
+	 * Should be deleted later.
+	 */
+	public void clearBoard() {
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				board[i][j] = null;
+			}
+		}
+	}
 }
