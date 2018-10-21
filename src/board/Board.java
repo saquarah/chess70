@@ -22,44 +22,46 @@ public class Board {
 		populateBoard();
 	}
 	private void populateBoard() { // This initializes the board with pieces
-		board[0][0] = new Rook('w', 'R');
-		board[0][1] = new Knight('w', 'N');
-		board[0][2] = new Bishop('w', 'B');
-		board[0][3] = new Queen('w', 'Q'); 
-		board[0][4] = new King('w', 'K');
-		board[0][5] = new Bishop('w', 'B');
-		board[0][6] = new Knight('w', 'N');
-		board[0][7] = new Rook('w', 'R');
+		board[0][0] = new Rook('b', 'R');
+		board[0][1] = new Knight('b', 'N');
+		board[0][2] = new Bishop('b', 'B');
+		board[0][3] = new Queen('b', 'Q'); 
+		board[0][4] = new King('b', 'K');
+		board[0][5] = new Bishop('b', 'B');
+		board[0][6] = new Knight('b', 'N');
+		board[0][7] = new Rook('b', 'R');
 		
 		for(int i = 0; i < 8; i++) {
-			board[1][i] = new Pawn('w', 'p');
+			board[1][i] = new Pawn('b', 'p');
 		}
 		
 		for(int i = 0; i < 2; i++) { // adds all white pieces to array
 			for(int j = 0; j < 8; j++) {
-				wPieces.add(board[i][j]);
+				bPieces.add(board[i][j]);
 			}
 		}
 		
-		board[7][0] = new Rook('b', 'R');
-		board[7][1] = new Knight('b', 'N');
-		board[7][2] = new Bishop('b', 'B');
-		board[7][3] = new Queen('b', 'Q');
-		board[7][4] = new King('b', 'K');
-		board[7][5] = new Bishop('b', 'B');
-		board[7][6] = new Knight('b', 'N');
-		board[7][7] = new Rook('b', 'R');
+		board[7][0] = new Rook('w', 'R');
+		board[7][1] = new Knight('w', 'N');
+		board[7][2] = new Bishop('w', 'B');
+		board[7][3] = new Queen('w', 'Q');
+		board[7][4] = new King('w', 'K');
+		board[7][5] = new Bishop('w', 'B');
+		board[7][6] = new Knight('w', 'N');
+		board[7][7] = new Rook('w', 'R');
 		
 		for(int i = 0; i < 8; i++) {
-			board[6][i] = new Pawn('b', 'p');
+			board[6][i] = new Pawn('w', 'p');
 		}
 		
 		for(int i = 7; i > 5; i--) {
 			for(int j = 0; j < 8; j++) {
-				bPieces.add(board[i][j]);
+				wPieces.add(board[i][j]);
 			}
 		}
 		Piece.setBoard(this);
+		Piece.setWPieces(wPieces);
+		Piece.setBPieces(bPieces);
 	}
 	/**
 	 * Gets the chess piece at the given FileRank location
@@ -78,6 +80,21 @@ public class Board {
 		}
 		return -1;
 	}
+	/**
+	 * Attempts to move the piece from start to the end
+	 * @param start
+	 * @param end
+	 */
+	public void move(FileRank start, FileRank end) {
+		if(get(start) != null) {
+			if(get(start).isValidMove(start, end)) {
+				if(get(end) != null) {
+					
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Prints the chessboard in the required format
 	 */
