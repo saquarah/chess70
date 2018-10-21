@@ -1,5 +1,7 @@
 package pieces;
 
+import java.util.ArrayList;
+
 import board.Board;
 import board.FileRank;
 
@@ -7,6 +9,9 @@ public abstract class Piece {
 	char team;
 	private char type;
 	private static Board board; // This is the same board created for the game. It will be used to determine legal moves, etc.
+	private static ArrayList<Piece> wPieces;
+	private static ArrayList<Piece> bPieces;
+	private ArrayList<Piece> teamPieces;
 	public Piece(char team, char type) {
 		this.team = team;
 		this.type = type;
@@ -16,6 +21,18 @@ public abstract class Piece {
 	}
 	public static Board getBoard() {
 		return board;
+	}
+	public static void setWPieces(ArrayList<Piece> pieces) {
+		wPieces = pieces;
+	}
+	public static ArrayList<Piece> getWPieces() {
+		return wPieces;
+	}
+	public static void setBPieces(ArrayList<Piece> pieces) {
+		bPieces = pieces;
+	}
+	public static ArrayList<Piece> getBPieces() {
+		return bPieces;
 	}
 	/**
 	 * 

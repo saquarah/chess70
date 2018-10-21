@@ -21,7 +21,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean isValidMove(FileRank start, FileRank end) {
-		if(Piece.getBoard().get(end).getTeam() == team) {
+		if(Piece.getBoard().get(end).getTeam() == team) { // can't go to same square as team
 			return false;
 		}
 		if(team == 'w') { // if white (can only move down)
