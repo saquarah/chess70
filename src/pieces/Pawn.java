@@ -24,13 +24,16 @@ public class Pawn extends Piece {
 		if(Piece.getBoard().get(end).getTeam() == team) { // can't go to same square as team
 			return false;
 		}
-		if(team == 'w') { // if white (can only move down)
-			
-		} else { // if black (can only move up)
-			
-		}
-		
+
 		return false;
 	}
-
+	private boolean isEnPassant (FileRank start, FileRank end) {
+		return false;
+	}
+	private boolean is2SquareMove (FileRank start, FileRank end) {
+		return false;
+	}
+	private boolean isCapture (FileRank start, FileRank end) {
+		return false;
+	}
 }
