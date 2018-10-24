@@ -13,7 +13,7 @@ public class Bishop extends Piece {
 	public boolean isValidMove(FileRank start, FileRank end) {
 		
 		if(Piece.getBoard().get(end)!= null && Piece.getBoard().get(end).getTeam() == team) {
-			System.out.println("end is friend");
+			//System.out.println("end is friend");
 			return false;
 		}
 		char s_f = start.getFile();
@@ -33,8 +33,8 @@ public class Bishop extends Piece {
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
-					System.out.println("false in case 1");
-					System.out.println(t_f);
+					//System.out.println("false in case 1");
+					//System.out.println(t_f);
 					return false;
 				}
 				t_f++;
@@ -46,7 +46,7 @@ public class Bishop extends Piece {
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
-					System.out.println("false in case 2");
+					//System.out.println("false in case 2");
 					return false;
 				}
 				t_f++;
@@ -70,7 +70,7 @@ public class Bishop extends Piece {
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
-					System.out.println("false in case 4");
+					//System.out.println("false in case 4");
 					return false;
 				}
 				t_f--;
