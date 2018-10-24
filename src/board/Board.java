@@ -14,12 +14,14 @@ public class Board {
 	ArrayList<Piece> wPieces = new ArrayList<Piece>();
 	ArrayList<Piece> bPieces = new ArrayList<Piece>();
 	Piece[][] board = new Piece[8][8];
-	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}; 
+	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+	private int turn;
 	/**
 	 * Instantiates Board object filling it with chess pieces
 	 */
 	public Board() {
 		populateBoard();
+		turn = 0;
 	}
 	private void populateBoard() { // This initializes the board with pieces
 		board[0][0] = new Rook('b', 'R');
@@ -62,6 +64,9 @@ public class Board {
 		Piece.setBoard(this);
 		Piece.setWPieces(wPieces);
 		Piece.setBPieces(bPieces);
+	}
+	public int getTurn() {
+		return turn;
 	}
 	/**
 	 * Gets the chess piece at the given FileRank location
