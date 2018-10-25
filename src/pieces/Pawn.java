@@ -21,7 +21,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public boolean isValidMove(FileRank start, FileRank end) {
-
+		// they're so complicated >:v
 		if (is2SquareMove(start, end)) { // COMPLETE
 			return true;
 		}
@@ -54,6 +54,13 @@ public class Pawn extends Piece {
 	}
 	private boolean isCapture (FileRank start, FileRank end) {
 		if(isEnPassant(start, end)) {
+			return true;
+		}
+		if(team == 'w') {
+			if(end.getRank() - start.getRank() == 1) {
+				
+			}
+		} else {
 			
 		}
 		return false;
