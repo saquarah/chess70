@@ -93,9 +93,9 @@ public class Board {
 	public void move(FileRank start, FileRank end) {
 		if(get(start) != null) {
 			if(get(start).isValidMove(start, end)) {
-				if(get(end) != null) {
-					
-				}
+				
+			} else {
+				System.out.println("Invalid move: " + start);
 			}
 		}
 	}
