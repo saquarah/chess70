@@ -78,7 +78,11 @@ public class Board {
 		int rank = 7 - (fr.rank - 1);
 		return board[rank][file];
 	}
-
+	public void set(FileRank fr, Piece piece) {
+		int file = indexOf("" + fr.file);
+		int rank = 7 - (fr.rank - 1);
+		board[rank][file] = piece;
+	}
 	private int indexOf(String c) {
 		for(int i = 0; i < file.length; i++) {
 			if(c.charAt(0) == file[i]) return i;
@@ -93,7 +97,12 @@ public class Board {
 	public void move(FileRank start, FileRank end) {
 		if(get(start) != null) {
 			if(get(start).isValidMove(start, end)) {
-				
+				Piece movingPiece = get(start);
+				set(start, null);
+				if(get(end) != null) { // this indicates a piece is getting cap'd
+					// implement later
+				}
+				set(end, movingPiece);
 			} else {
 				System.out.println("Invalid move: " + start);
 			}
@@ -122,6 +131,7 @@ public class Board {
 		for(int i = 0; i < 8; i++) {
 			System.out.print(" " + file[i] + " ");
 		}
+		System.out.println("\n");
 	}
 	/**
 	 * This is just a method I created for debugging purposes, ignore.
