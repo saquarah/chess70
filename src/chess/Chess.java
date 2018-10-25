@@ -3,17 +3,30 @@ package chess;
 import board.Board;
 import board.FileRank;
 import pieces.Piece;
-
+import java.util.Scanner;
 public class Chess {
 	public static void main(String[] args) {
 		Board board = new Board();
-		board.printBoard();
-		board.move(new FileRank('a', 2), new FileRank('a', 4));
-		board.move(new FileRank('b', 7), new FileRank('b', 5));
-		board.printBoard();
-		board.move(new FileRank('b', 5), new FileRank('a', 4));
-		board.printBoard();
+		Scanner sc = new Scanner(System.in);
+//		board.printBoard();
+//		board.move(new FileRank('a', 2), new FileRank('a', 4));
+//		board.move(new FileRank('a', 4), new FileRank('a', 5));
+//		board.move(new FileRank('b', 7), new FileRank('b', 5));
+//		board.printBoard();
+//		board.move(new FileRank('a', 5), new FileRank('b', 6));
+//		board.printBoard();
 		
+		while(true) {
+			board.printBoard();
+			System.out.print("Start: ");
+			String start = sc.nextLine();
+			System.out.print("End: ");
+			String end = sc.nextLine();
+			FileRank frStart = new FileRank(start.charAt(0), Character.getNumericValue(start.charAt(1)));
+			FileRank frEnd = new FileRank(end.charAt(0), Character.getNumericValue(end.charAt(1)));
+			System.out.println();
+			board.move(frStart, frEnd);
+		}
 		// should probably put game loop in this class
 	}
 }
