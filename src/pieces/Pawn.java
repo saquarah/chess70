@@ -11,13 +11,23 @@ import board.FileRank;
  */
 public class Pawn extends Piece {
 	boolean justMoved2Squares; // only true the turn after a pawn uses its 2 square move
+	FileRank enPassantLoc;
 	public Pawn(char team, char type) {
 		super(team, type);
 		justMoved2Squares = false;
+		enPassantLoc = null;
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean isJustMoved2Squares() {
+	public FileRank getEnPassantLoc() {
+		return enPassantLoc;
+	}
+
+	public void setEnPassantLoc(FileRank enPassantLoc) {
+		this.enPassantLoc = enPassantLoc;
+	}
+
+	public boolean hasJustMoved2Squares() {
 		return justMoved2Squares;
 	}
 
@@ -44,6 +54,37 @@ public class Pawn extends Piece {
 		}
 	}
 	private boolean isEnPassant (FileRank start, FileRank end) {
+		if(Piece.getBoard().get(end) != null) return false;
+		if(team == 'w') { // if white capping black
+			if ((end.getRank() - start.getRank() == 1) && ( // it only moved one rank up
+					end.getFile() - start.getFile() == -1 || // the file is one to the left of the start file
+					end.getFile() - start.getFile() == 1 )) { // the file is one to the right of the start file
+				enPassantLoc = new FileRank(end.getFile(), end.getRank() - 1); // save location of pawn to be cap'd
+				Piece target = Piece.getBoard().get(enPassantLoc);
+				if(target instanceof Pawn) {
+					Pawn pTarget = (Pawn) target;
+					if(pTarget.hasJustMoved2Squares()) {
+						return true;
+					}
+				}
+				
+			}
+		} else { // if black capping white
+			if ((end.getRank() - start.getRank() == -1) && ( // it only moved one rank down
+					end.getFile() - start.getFile() == -1 || // the file is one to the left of the start file
+					end.getFile() - start.getFile() == 1 )) { // the file is one to the right of the start file
+				enPassantLoc = new FileRank(end.getFile(), end.getRank() + 1);
+				Piece target = Piece.getBoard().get(enPassantLoc);
+				if(target instanceof Pawn) {
+					Pawn pTarget = (Pawn) target;
+					if(pTarget.hasJustMoved2Squares()) {
+						return true;
+					}
+				}
+				
+			}
+		}
+		enPassantLoc = null;
 		return false;
 	}
 	private boolean is2SquareMove (FileRank start, FileRank end) {
@@ -61,11 +102,12 @@ public class Pawn extends Piece {
 		return false;
 	}
 	private boolean isCapture (FileRank start, FileRank end) {
-		if(Piece.getBoard().get(end) == null) return false;
+		
 		
 		if(isEnPassant(start, end)) {
 			return true;
 		}
+		if(Piece.getBoard().get(end) == null) return false;
 		
 		if(team == 'w'  && Piece.getBoard().get(end).getTeam() != 'w') { // white capping black
 			if((end.getRank() - start.getRank() == 1) && ( // it only moved one rank up

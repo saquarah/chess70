@@ -105,6 +105,20 @@ public class Board {
 			if(get(start).isValidMove(start, end)) {
 				Piece movingPiece = get(start);
 				set(start, null);
+				if(movingPiece instanceof Pawn) { // This is to check if an en passant occurred
+					Pawn movingPawn = (Pawn) movingPiece; // it's special bc en passant is the only move where you end not
+					if (movingPawn.getEnPassantLoc() != null) { // on the same space as the piece you capped.
+						Pawn target = (Pawn) get(movingPawn.getEnPassantLoc());
+						if (target.getTeam() == 'w') {
+							wPieces.remove(target);
+						} else {
+							bPieces.remove(target);
+						}
+						pawns.remove(target);
+						set(movingPawn.getEnPassantLoc(), null);
+						movingPawn.setEnPassantLoc(null);
+					}
+				}
 				if(get(end) != null) { // this indicates a piece is getting cap'd
 					// implement later
 					Piece dyingPiece = get(end);
