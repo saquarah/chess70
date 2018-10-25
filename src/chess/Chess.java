@@ -9,7 +9,9 @@ public class Chess {
 		Board board = new Board();
 		board.printBoard();
 		board.move(new FileRank('a', 2), new FileRank('a', 4));
-		board.move(new FileRank('e', 7), new FileRank('e', 4));
+		board.move(new FileRank('b', 7), new FileRank('b', 5));
+		board.printBoard();
+		board.move(new FileRank('b', 5), new FileRank('a', 4));
 		board.printBoard();
 		
 		// should probably put game loop in this class

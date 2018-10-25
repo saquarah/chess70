@@ -22,6 +22,7 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isValidMove(FileRank start, FileRank end) {
 		// they're so complicated >:v
+		
 		if (is2SquareMove(start, end)) { // COMPLETE
 			return true;
 		}
@@ -40,7 +41,7 @@ public class Pawn extends Piece {
 	}
 	private boolean is2SquareMove (FileRank start, FileRank end) {
 		if(!hasMoved) {
-			if(team == 'w') { // if white
+			if(team == 'w') { // if white capping black
 				if (end.getRank() - start.getRank() == 2 && start.getFile() == end.getFile()) { // pawn moved 
 					return true;
 				}
@@ -53,14 +54,24 @@ public class Pawn extends Piece {
 		return false;
 	}
 	private boolean isCapture (FileRank start, FileRank end) {
+		if(Piece.getBoard().get(end) == null) return false;
+		
 		if(isEnPassant(start, end)) {
 			return true;
 		}
-		if(team == 'w') {
-			if(end.getRank() - start.getRank() == 1) {
-				
+		
+		if(team == 'w'  && Piece.getBoard().get(end).getTeam() != 'w') { // white capping black
+			if((end.getRank() - start.getRank() == 1) && ( // it only moved one rank up
+					end.getFile() - start.getFile() == -1 || // the file is one to the left of the start file
+					end.getFile() - start.getFile() == 1 )) { // the file is one to the right of the start file
+				return true;
 			}
-		} else {
+		} else if(team == 'b' && Piece.getBoard().get(end).getTeam() != 'b') { // black capping white
+			if((end.getRank() - start.getRank() == -1) && ( // it only moved one rank down
+					end.getFile() - start.getFile() == -1 || // the file is one to the left of the start file
+					end.getFile() - start.getFile() == 1 )) { // the file is one to the right of the start file
+				return true;
+			}
 			
 		}
 		return false;

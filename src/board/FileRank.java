@@ -22,6 +22,7 @@ public class FileRank {
 		result += "\nRank: " + rank;
 		return result;
 	}
+	// not sure how useful these will be
 	public boolean isToTheLeftOf(char file) {
 		return this.file < file;
 	}
