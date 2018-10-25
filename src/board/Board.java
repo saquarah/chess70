@@ -119,12 +119,26 @@ public class Board {
 				}
 				set(end, movingPiece);
 				movingPiece.setHasMoved(true);
+				updatePieces(movingPiece);
 			} else {
 				System.out.println("Invalid move: " + start);
 			}
 		}
 	}
-	
+	/**
+	 * If it is the turn after a pawn moved 2 squares on the other team, en passant can
+	 * be performed.  This means, at the end of every turn, we must set every pawn's
+	 * justMoved2Squares to false, unless the piece that just moved is a pawn that moved
+	 * two squares.
+	 * 
+	 */
+	private void updatePieces(Piece justMoved) {
+		for(int i = 0; i < pawns.size(); i++) {
+			if(pawns.get(i) != justMoved) {
+				pawns.get(i).setJustMoved2Squares(false);
+			}
+		}
+	}
 	/**
 	 * Prints the chessboard in the required format
 	 */

@@ -16,6 +16,14 @@ public class Pawn extends Piece {
 		justMoved2Squares = false;
 		// TODO Auto-generated constructor stub
 	}
+	
+	public boolean isJustMoved2Squares() {
+		return justMoved2Squares;
+	}
+
+	public void setJustMoved2Squares(boolean justMoved2Squares) {
+		this.justMoved2Squares = justMoved2Squares;
+	}
 
 	@Override
 	public boolean isValidMove(FileRank start, FileRank end) {
