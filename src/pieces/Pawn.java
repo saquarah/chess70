@@ -10,11 +10,9 @@ import board.FileRank;
  * initial move. 
  */
 public class Pawn extends Piece {
-	boolean hasMoved; // false if the pawn has never moved
 	boolean justMoved2Squares; // only true the turn after a pawn uses its 2 square move
 	public Pawn(char team, char type) {
 		super(team, type);
-		hasMoved = false;
 		justMoved2Squares = false;
 		// TODO Auto-generated constructor stub
 	}
@@ -24,6 +22,7 @@ public class Pawn extends Piece {
 		// they're so complicated >:v
 		
 		if (is2SquareMove(start, end)) { // COMPLETE
+			justMoved2Squares = true;
 			return true;
 		}
 		else if (isCapture(start, end)) { // also considers if capture is en passant
@@ -40,7 +39,7 @@ public class Pawn extends Piece {
 		return false;
 	}
 	private boolean is2SquareMove (FileRank start, FileRank end) {
-		if(!hasMoved) {
+		if(!this.hasMoved()) {
 			if(team == 'w') { // if white capping black
 				if (end.getRank() - start.getRank() == 2 && start.getFile() == end.getFile()) { // pawn moved 
 					return true;

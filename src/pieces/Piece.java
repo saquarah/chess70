@@ -12,9 +12,11 @@ public abstract class Piece {
 	private static ArrayList<Piece> wPieces;
 	private static ArrayList<Piece> bPieces;
 	private ArrayList<Piece> teamPieces;
+	private boolean hasMoved;
 	public Piece(char team, char type) {
 		this.team = team;
 		this.type = type;
+		hasMoved = false;
 	}
 	public static void setBoard(Board newBoard) {
 		board = newBoard;
@@ -33,6 +35,12 @@ public abstract class Piece {
 	}
 	public static ArrayList<Piece> getBPieces() {
 		return bPieces;
+	}
+	public void setHasMoved(boolean hasMoved) {
+		this.hasMoved = hasMoved;
+	}
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 	/**
 	 * 
