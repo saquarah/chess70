@@ -13,6 +13,7 @@ import pieces.Rook;
 public class Board {
 	ArrayList<Piece> wPieces = new ArrayList<Piece>();
 	ArrayList<Piece> bPieces = new ArrayList<Piece>();
+	ArrayList<Pawn> pawns = new ArrayList<Pawn> ();
 	Piece[][] board = new Piece[8][8];
 	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 	private int turn;
@@ -34,7 +35,9 @@ public class Board {
 		board[0][7] = new Rook('b', 'R');
 		
 		for(int i = 0; i < 8; i++) {
-			board[1][i] = new Pawn('b', 'p');
+			Pawn p = new Pawn('b', 'p');
+			board[1][i] = p;
+			pawns.add(p);
 		}
 		
 		for(int i = 0; i < 2; i++) { // adds all white pieces to array
@@ -53,7 +56,9 @@ public class Board {
 		board[7][7] = new Rook('w', 'R');
 		
 		for(int i = 0; i < 8; i++) {
-			board[6][i] = new Pawn('w', 'p');
+			Pawn p = new Pawn('w', 'p');
+			board[6][i] = p;
+			pawns.add(p);
 		}
 		
 		for(int i = 7; i > 5; i--) {
@@ -90,7 +95,8 @@ public class Board {
 		return -1;
 	}
 	/**
-	 * Attempts to move the piece from start to the end
+	 * Moves the piece from start to the end, capturing the piece at
+	 * FileRank end.
 	 * @param start
 	 * @param end
 	 */
@@ -101,8 +107,18 @@ public class Board {
 				set(start, null);
 				if(get(end) != null) { // this indicates a piece is getting cap'd
 					// implement later
+					Piece dyingPiece = get(end);
+					if(dyingPiece instanceof Pawn) {
+						pawns.remove(dyingPiece);
+					}
+					if(dyingPiece.getTeam() == 'w') {
+						wPieces.remove(dyingPiece);
+					} else {
+						bPieces.remove(dyingPiece);
+					}
 				}
 				set(end, movingPiece);
+				movingPiece.setHasMoved(true);
 			} else {
 				System.out.println("Invalid move: " + start);
 			}
