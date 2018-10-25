@@ -22,7 +22,16 @@ public class FileRank {
 		result += "\nRank: " + rank;
 		return result;
 	}
-//	public boolean isToTheLeftOf(char rank) {
-//		
-//	}
+	public boolean isToTheLeftOf(char file) {
+		return this.file < file;
+	}
+	public boolean isToTheRightOf(char file) {
+		return this.file > file;
+	}
+	public boolean isAbove(int rank) {
+		return this.rank > rank;
+	}
+	public boolean isBelow(int rank) {
+		return this.rank < rank;
+	}
 }
