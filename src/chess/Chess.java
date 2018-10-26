@@ -8,6 +8,11 @@ public class Chess {
 	public static void main(String[] args) {
 		Board board = new Board();
 		Scanner sc = new Scanner(System.in);
+//		board.move(new FileRank('a', 2), new FileRank('a', 4));
+//		board.printBoard();
+//		board.move(new FileRank('a', 1), new FileRank('a', 3));
+//		board.move(new FileRank('a', 3), new FileRank('h', 3));
+//		board.printBoard();
 //		board.printBoard();
 //		board.move(new FileRank('a', 2), new FileRank('a', 4));
 //		board.move(new FileRank('a', 4), new FileRank('a', 5));
