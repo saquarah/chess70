@@ -12,6 +12,32 @@ public class Rook extends Piece {
 	@Override
 	public boolean isValidMove(FileRank start, FileRank end) {
 		// TODO Auto-generated method stub
+		if(start.getFile() == end.getFile()) {
+			if(end.isToTheLeftOf(start.getFile())) {
+				for(char i = start.getFile(); i > end.getFile(); i--) {
+					if(Piece.getBoard().get(new FileRank(i, start.getRank())) != null) {
+						return false;
+					}
+				}
+				if(Piece.getBoard().get(end) == null || Piece.getBoard().get(end).getTeam() != getTeam()) {
+					return true;
+				}
+			} else if (end.isToTheRightOf(start.getFile())) {
+				for(char i = start.getFile(); i < end.getFile(); i++) {
+					
+				}
+			}
+		} else if (start.getRank() == end.getRank()) {
+			if(end.isAbove(start.getRank())) {
+				for(int i = start.getRank(); i < end.getRank(); i++) {
+					
+				}
+			} else if (end.isBelow(start.getRank())) {
+				for(int i = start.getRank(); i > end.getRank(); i--) {
+					
+				}
+			}
+		}
 		return false;
 	}
 

@@ -43,7 +43,7 @@ public class Pawn extends Piece {
 			justMoved2Squares = true;
 			return true;
 		}
-		else if (isCapture(start, end)) { // also considers if capture is en passant
+		else if (isCapture(start, end)) { // also considers if capture is en passant COMPLETE
 			return true;
 		}
 		else if (isRegularMove(start, end)) { // COMPLETE
