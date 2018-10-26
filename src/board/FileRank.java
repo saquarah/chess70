@@ -35,4 +35,13 @@ public class FileRank {
 	public boolean isBelow(int rank) {
 		return this.rank < rank;
 	}
+	
+	public boolean equals(Object o) {
+		if(o == null || !(o instanceof FileRank)) {
+			return false;
+		} else {
+			FileRank fr = (FileRank) o;
+			return this.file == fr.file && this.rank == fr.rank;
+		}
+	}
 }
