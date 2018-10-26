@@ -32,8 +32,9 @@ public class King extends Piece{
         if((Math.abs(s_f-e_f)<=1) && (Math.abs(s_r-e_r)<=1)) {
             return true;
         }
-        
-        
+        else{
+        System.out.println("Illegal move, try again");
+        }
         return false;
     }
     
