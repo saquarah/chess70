@@ -44,10 +44,7 @@ public class Knight extends Piece {
             return true;
             
         }
-        
-        else {
-            System.out.println("Illegal move, try again");
-        }
+
         return false;
         
     }
