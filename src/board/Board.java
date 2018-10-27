@@ -100,7 +100,7 @@ public class Board {
 	 * @param start
 	 * @param end
 	 */
-	public void move(FileRank start, FileRank end) {
+	public boolean move(FileRank start, FileRank end) {
 		if(get(start) != null) {
 			if(get(start).isValidMove(start, end)) {
 				Piece movingPiece = get(start);
@@ -134,10 +134,12 @@ public class Board {
 				set(end, movingPiece);
 				movingPiece.setHasMoved(true);
 				updatePieces(movingPiece);
+				return true;
 			} else {
 				System.out.println("Invalid move: " + start);
 			}
 		}
+		return false;
 	}
 	/**
 	 * If it is the turn after a pawn moved 2 squares on the other team, en passant can
