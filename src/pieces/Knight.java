@@ -13,7 +13,7 @@ public class Knight extends Piece {
     public boolean isValidMove(FileRank start, FileRank end) {
         // TODO Auto-generated method stub
         if(Piece.getBoard().get(end)!= null && Piece.getBoard().get(end).getTeam() == team) {
-            System.out.println("end is friend");
+//            System.out.println("end is friend");
             return false;
         }
         

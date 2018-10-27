@@ -58,7 +58,7 @@ public class Bishop extends Piece {
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
-					System.out.println("false in case 3");
+//					System.out.println("false in case 3");
 					return false;
 				}
 				t_f--;
