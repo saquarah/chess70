@@ -27,7 +27,7 @@ public class Chess {
 			System.out.print(team + "'s move: ");
 			
 			String input = sc.nextLine();
-//			if(board.inCheck()) {
+//			if(board.inCheck(currentTeam)) {
 //				System.out.println("Check");
 //			}
 			StringTokenizer st = new StringTokenizer(input, " ");
@@ -49,7 +49,10 @@ public class Chess {
 				System.out.println("Invalid input");
 				continue;
 			}
-			
+			if(board.get(frStart) == null) {
+				System.out.println("Error: no piece at given FileRank");
+				continue;
+			}
 			if(board.get(frStart).getTeam() != currentTeam) {
 				System.out.println("Error: cannot control a piece on the other team");
 				continue;
