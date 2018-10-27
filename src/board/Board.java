@@ -102,6 +102,17 @@ public class Board {
 		return -1;
 	}
 	/**
+	 * Places the piece at FileRank start on FileRank end, regardless of the
+	 * legality of the move. Useful for placing the rook when the king is castling.
+	 * @param start
+	 * @param end
+	 */
+	public void put(FileRank start, FileRank end) {
+		Piece movingPiece = get(start);
+		set(end, movingPiece);
+		set(start, null);
+	}
+	/**
 	 * Moves the piece from start to the end, capturing the piece at
 	 * FileRank end.
 	 * @param start
