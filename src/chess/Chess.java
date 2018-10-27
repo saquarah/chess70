@@ -9,6 +9,7 @@ import board.FileRank;
 public class Chess {
 	
 	public static void main(String[] args) {
+		testLoop();
 		gameLoop();
 	}
 	
@@ -34,6 +35,10 @@ public class Chess {
 			String input = sc.nextLine();
 			// resign & draw detection should go here
 			// or after tokenizer creation
+			// e2 e4
+			// f7 f6
+			// d1 h5
+			// c7 c6
 			if(board.inCheck(currentTeam)) {
 				System.out.println("Check");
 			}
@@ -111,6 +116,9 @@ public class Chess {
 		
 		while(true) {
 			board.printBoard();
+			if(board.inCheck('b')) {
+				System.out.println("B is in check");
+			}
 			System.out.print("Start: ");
 			String start = sc.nextLine();
 			System.out.print("End: ");

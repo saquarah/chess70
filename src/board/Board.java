@@ -74,7 +74,7 @@ public class Board {
 		for(int i = 7; i > 5; i--) {
 			for(int j = 0; j < 8; j++) {
 				Piece currentPiece = board[i][j];
-				currentPiece.setLoc(new FileRank(file[j], 8 - 1));
+				currentPiece.setLoc(new FileRank(file[j], 8 - i));
 				wPieces.add(currentPiece);
 			}
 		}
@@ -180,6 +180,7 @@ public class Board {
 			for(int i = 0; i < wPieces.size(); i++) {
 				if(wPieces.get(i) instanceof King) {
 					king = wPieces.get(i);
+					break;
 				}
 			}
 		} else {
@@ -187,6 +188,7 @@ public class Board {
 			for(int i = 0; i < bPieces.size(); i++) {
 				if(bPieces.get(i) instanceof King) {
 					king = bPieces.get(i);
+					break;
 				}
 			}
 		}
