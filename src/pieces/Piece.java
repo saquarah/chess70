@@ -13,10 +13,19 @@ public abstract class Piece {
 	private static ArrayList<Piece> bPieces;
 	private ArrayList<Piece> teamPieces;
 	private boolean hasMoved;
+	
+	private FileRank loc;
+	
 	public Piece(char team, char type) {
 		this.team = team;
 		this.type = type;
 		hasMoved = false;
+	}
+	public void setLoc(FileRank loc) {
+		this.loc = loc;
+	}
+	public FileRank getLoc() {
+		return loc;
 	}
 	public static void setBoard(Board newBoard) {
 		board = newBoard;
@@ -51,8 +60,14 @@ public abstract class Piece {
 		return team;
 	}
 	
-	public String toString() {
+	public String name() {
 		return team + "" + type;
+	}
+	
+	public String toString() {
+		String p = team + "" + type + "\n";
+		p += loc;
+		return p;
 	}
 	
 	public abstract boolean isValidMove(FileRank start, FileRank end);
