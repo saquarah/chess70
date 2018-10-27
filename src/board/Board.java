@@ -135,9 +135,8 @@ public class Board {
 				movingPiece.setHasMoved(true);
 				updatePieces(movingPiece);
 				return true;
-			} else {
-				System.out.println("Invalid move: " + start);
 			}
+			
 		}
 		return false;
 	}
