@@ -17,6 +17,12 @@ public class Board {
 	Piece[][] board = new Piece[8][8];
 	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 	private int turn; // XXX may delete this field and its relating methods
+	
+	static class Move {
+		FileRank start;
+		FileRank end;
+	}
+	
 	/**
 	 * Instantiates Board object filling it with chess pieces.
 	 * turn num
@@ -41,9 +47,12 @@ public class Board {
 			pawns.add(p);
 		}
 		
-		for(int i = 0; i < 2; i++) { // adds all white pieces to array
+		for(int i = 0; i < 2; i++) { // adds all black pieces to array
 			for(int j = 0; j < 8; j++) {
-				bPieces.add(board[i][j]);
+				Piece currentPiece = board[i][j];
+				currentPiece.setLoc(new FileRank(file[j], 8 - i));
+				bPieces.add(currentPiece);
+				
 			}
 		}
 		
@@ -64,7 +73,9 @@ public class Board {
 		
 		for(int i = 7; i > 5; i--) {
 			for(int j = 0; j < 8; j++) {
-				wPieces.add(board[i][j]);
+				Piece currentPiece = board[i][j];
+				currentPiece.setLoc(new FileRank(file[j], 8 - 1));
+				wPieces.add(currentPiece);
 			}
 		}
 		Piece.setBoard(this);
@@ -84,6 +95,7 @@ public class Board {
 		int rank = 7 - (fr.rank - 1);
 		return board[rank][file];
 	}
+	
 	/**
 	 * Puts the parameterized Piece on the given FileRank. If 
 	 * the piece is null, it empties the FileRank space.
@@ -150,6 +162,7 @@ public class Board {
 					}
 				}
 				set(end, movingPiece);
+				movingPiece.setLoc(end);
 				movingPiece.setHasMoved(true);
 				updatePieces(movingPiece);
 				return true;
@@ -158,6 +171,34 @@ public class Board {
 		}
 		return false;
 	}
+	
+	public boolean inCheck(char team) {
+		ArrayList<Piece> enemyTeam;
+		Piece king = null;
+		if(team == 'w') { // if the team that has to move this turn is in check
+			enemyTeam = bPieces;
+			for(int i = 0; i < wPieces.size(); i++) {
+				if(wPieces.get(i) instanceof King) {
+					king = wPieces.get(i);
+				}
+			}
+		} else {
+			enemyTeam = wPieces;
+			for(int i = 0; i < bPieces.size(); i++) {
+				if(bPieces.get(i) instanceof King) {
+					king = bPieces.get(i);
+				}
+			}
+		}
+		for(int i = 0; i < enemyTeam.size(); i++) {
+			Piece enemyPiece = enemyTeam.get(i);
+			if(enemyPiece.isValidMove(enemyPiece.getLoc(), king.getLoc())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * If it is the turn after a pawn moved 2 squares on the other team, en passant can
 	 * be performed.  This means, at the end of every turn, we must set every pawn's
@@ -185,7 +226,7 @@ public class Board {
 						System.out.print("##");
 					}
 				} else {
-					System.out.print(board[i][j]);
+					System.out.print(board[i][j].name());
 				}
 				System.out.print(" ");
 			}

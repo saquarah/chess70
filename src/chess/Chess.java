@@ -7,31 +7,38 @@ import java.util.StringTokenizer;
 import board.Board;
 import board.FileRank;
 public class Chess {
+	
 	public static void main(String[] args) {
 		gameLoop();
 	}
+	
 	public static void gameLoop() {
 		Board board = new Board();
 		Scanner sc = new Scanner(System.in);
 		String team = "White";
+		
 		char currentTeam = 'w';
 		boolean gameOn = true;
 		boolean illegalMove = false;
+		
 		String startStr;
 		FileRank frStart;
 		String endStr;
 		FileRank frEnd;
+		
 		while(gameOn) {
 			if(!illegalMove)
 				board.printBoard();
 			System.out.print(team + "'s move: ");
 			
 			String input = sc.nextLine();
-//			if(board.inCheck(currentTeam)) {
-//				System.out.println("Check");
-//			}
-			StringTokenizer st = new StringTokenizer(input, " ");
 			// resign & draw detection should go here
+			// or after tokenizer creation
+			if(board.inCheck(currentTeam)) {
+				System.out.println("Check");
+			}
+			StringTokenizer st = new StringTokenizer(input, " ");
+			
 			
 			// TODO
 			// resign
@@ -40,7 +47,7 @@ public class Chess {
 			// check
 			// checkmate
 			try {
-				startStr = st.nextToken();
+				startStr = st.nextToken(); 
 				frStart = getFileRank(startStr);
 				
 				endStr = st.nextToken();
@@ -79,6 +86,16 @@ public class Chess {
 		sc.close();
 	}
 	
+	private static boolean isResign(String input) {
+		return false;
+	}
+	private static boolean isDrawQuestion(String input) {
+		return false;
+	}
+	private static boolean isDrawAnswer(String input) {
+		return false;
+	}
+	
 	private static FileRank getFileRank(String input) {
 		char file = input.charAt(0);
 		int rank = Character.getNumericValue(input.charAt(1));
@@ -114,3 +131,9 @@ public class Chess {
 // wp wp wp wp wp wp wp wp  2
 // wR wN wB wQ wK wB wN wR  1
 //  a  b  c  d  e  f  g  h 
+
+// a1 translates to [7][0]
+// so if a = 7, b = 6, c = 5, d = 4, e = 3, f = 2, g = 1, h = 0
+// as for the rank
+// 1 = 0, 2 = 1, 3 = 2, 4 = 3, 5 = 4, 6 = 5, 7 = 6, 8 =7
+// so we can conclude that 
