@@ -16,9 +16,10 @@ public class Board {
 	ArrayList<Pawn> pawns = new ArrayList<Pawn> ();
 	Piece[][] board = new Piece[8][8];
 	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	private int turn;
+	private int turn; // XXX may delete this field and its relating methods
 	/**
-	 * Instantiates Board object filling it with chess pieces
+	 * Instantiates Board object filling it with chess pieces.
+	 * turn num
 	 */
 	public Board() {
 		populateBoard();
@@ -83,6 +84,12 @@ public class Board {
 		int rank = 7 - (fr.rank - 1);
 		return board[rank][file];
 	}
+	/**
+	 * Puts the parameterized Piece on the given FileRank. If 
+	 * the piece is null, it empties the FileRank space.
+	 * @param fr - The FileRank being changed
+	 * @param piece - The piece being put on the space
+	 */
 	public void set(FileRank fr, Piece piece) {
 		int file = indexOf("" + fr.file);
 		int rank = 7 - (fr.rank - 1);

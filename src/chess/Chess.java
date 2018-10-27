@@ -9,21 +9,6 @@ import board.FileRank;
 public class Chess {
 	public static void main(String[] args) {
 		gameLoop();
-//		board.move(new FileRank('a', 2), new FileRank('a', 4));
-//		board.printBoard();
-//		board.move(new FileRank('a', 1), new FileRank('a', 3));
-//		board.move(new FileRank('a', 3), new FileRank('h', 3));
-//		board.printBoard();
-//		board.printBoard();
-//		board.move(new FileRank('a', 2), new FileRank('a', 4));
-//		board.move(new FileRank('a', 4), new FileRank('a', 5));
-//		board.move(new FileRank('b', 7), new FileRank('b', 5));
-//		board.printBoard();
-//		board.move(new FileRank('a', 5), new FileRank('b', 6));
-//		board.printBoard();
-		
-
-		// should probably put game loop in this class
 	}
 	public static void gameLoop() {
 		Board board = new Board();
@@ -42,12 +27,18 @@ public class Chess {
 			System.out.print(team + "'s move: ");
 			
 			String input = sc.nextLine();
-			
+//			if(board.inCheck()) {
+//				System.out.println("Check");
+//			}
 			StringTokenizer st = new StringTokenizer(input, " ");
+			// resign & draw detection should go here
+			
 			// TODO
 			// resign
 			// draw
 			// promotion
+			// check
+			// checkmate
 			try {
 				startStr = st.nextToken();
 				frStart = getFileRank(startStr);
@@ -82,6 +73,7 @@ public class Chess {
 				illegalMove = true;
 			}
 		}
+		sc.close();
 	}
 	
 	private static FileRank getFileRank(String input) {
