@@ -25,11 +25,15 @@ public class Bishop extends Piece {
 		if( Math.abs(a)!=Math.abs(b) ) {
 			return false;
 		}
-		char t_f = (char) ((int)s_f+1);
-		int t_r = s_r+1;
+		
+		//this part is causing issue: 
+		char t_f = (char) ((int)s_f);
+		int t_r = s_r;
 		
 		//case 1
 		if(a<0 && b<0) {
+			t_f++;
+			t_r++;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
@@ -39,10 +43,13 @@ public class Bishop extends Piece {
 				}
 				t_f++;
 				t_r++;
+				
 			}
 		}
 		//case 2
 		else if(a<0 && b>0) {
+			t_f++;
+			t_r--;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
@@ -55,8 +62,11 @@ public class Bishop extends Piece {
 		}
 		//case 3
 		else if(a>0 && b>0) {
+			t_f--;
+			t_r--;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
+				//System.out.println(t);
 				if(Piece.getBoard().get(t)!=null) {
 //					System.out.println("false in case 3");
 					return false;
@@ -67,6 +77,8 @@ public class Bishop extends Piece {
 		}
 		//case 4
 		else if(a>0 && b<0) {
+			t_f--;
+			t_r++;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
