@@ -127,6 +127,7 @@ public class Board {
 		Piece movingPiece = get(start);
 		set(end, movingPiece);
 		set(start, null);
+		movingPiece.setLoc(end);
 	}
 	/**
 	 * Moves the piece from start to the end, capturing the piece at
