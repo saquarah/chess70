@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import board.Board;
 import board.FileRank;
 
-public abstract class Piece {
+public abstract class Piece implements Cloneable{
 	char team;
 	private char type;
 	private static Board board; // This is the same board created for the game. It will be used to determine legal moves, etc.
 	private static ArrayList<Piece> wPieces;
 	private static ArrayList<Piece> bPieces;
-	private ArrayList<Piece> teamPieces;
 	private boolean hasMoved;
 	
 	private FileRank loc;
@@ -75,5 +74,14 @@ public abstract class Piece {
 	public void move(FileRank start, FileRank end) {
 		// can capture
 	}
-
+	
+	public Piece clone() {
+		try {
+			return (Piece) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

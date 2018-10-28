@@ -14,7 +14,7 @@ public class Board {
 	ArrayList<Piece> wPieces = new ArrayList<Piece>();
 	ArrayList<Piece> bPieces = new ArrayList<Piece>();
 	ArrayList<Pawn> pawns = new ArrayList<Pawn> ();
-	Piece[][] board = new Piece[8][8];
+	public Piece[][] board = new Piece[8][8]; // TODO CHANGE BACK TO PACKAGE
 	private char files[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 	private int turn; // XXX may delete this field and its relating methods
 	
@@ -211,23 +211,15 @@ public class Board {
 		Piece king = null;
 		if(team == 'w') { // if the team that has to move this turn is in check
 			pieces = wPieces;
-			for(int i = 0; i < wPieces.size(); i++) { // find the king
-				if(wPieces.get(i) instanceof King) {
-					king = wPieces.get(i);
-					break;
-				}
-			}
 		} else {
 			pieces = bPieces;
-			for(int i = 0; i < bPieces.size(); i++) { // find the king
-				if(bPieces.get(i) instanceof King) {
-					king = bPieces.get(i);
-					break;
-				}
-			}
 		}
+		// first really: pick a piece for which we are generating 
 		// First: generate a list of every legal move move
-		ArrayList<Move> everyMove = new ArrayList<Move>();
+		
+		
+
+		ArrayList<Move> everyMove = new ArrayList<Move>(); 									// make a list of every possible move
 		for(int i = 0; i < pieces.size(); i++) { // for every piece
 			
 			Piece currentPiece = pieces.get(i);
@@ -238,20 +230,35 @@ public class Board {
 				for(int rank = 1; rank <= 8; rank++) { // go through all possible ranks
 					
 					FileRank fr = new FileRank(file, rank);
+					
 					if(currentPiece.isValidMove(start, fr)) {
 						everyMove.add(new Move(start, fr));
 					}
-					
 				}
 			}
+			
+			// here is where we test each of the moves in the list
+			// if there is at least one example where the king on our team is not in check
+			// then we can return false
+
 		}
-		Board phantomBoard = new Board();
-//		for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
-//			for(int j = 0; j < phantomBoard.board.length; j++) {
-//				Piece p = null;
-//			//	phantomBoard.board[i][j] = p;
-//			}
-//		}
+		
+		for(Move move: everyMove) {
+			Board phantomBoard = new Board();
+			for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
+				for(int j = 0; j < phantomBoard.board.length; j++) {
+					Piece p = board[i][j].clone();
+					p.setLoc(new FileRank(p.getLoc().file, p.getLoc().rank));
+					phantomBoard.board[i][j] = p;
+				}
+			}
+			phantomBoard.move(move.start, move.end);
+			if(!inCheck(team)) {
+				return false;
+			}
+			
+		}
+
 		
 		return true;
 	}

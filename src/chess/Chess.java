@@ -6,10 +6,35 @@ import java.util.StringTokenizer;
 
 import board.Board;
 import board.FileRank;
+import pieces.Piece;
 public class Chess {
 	
 	public static void main(String[] args) {
-		testLoop();
+//		
+//		Board board = new Board();
+//		Board phantomBoard = new Board();
+//		for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
+//			for(int j = 0; j < phantomBoard.board.length; j++) {
+//				Piece p = null;
+//				if(board.board[i][j] != null) {
+//					p = board.board[i][j].clone();
+//					p.setLoc(new FileRank(p.getLoc().getFile(), p.getLoc().getRank()));
+//				}
+//				phantomBoard.board[i][j] = p;
+//			}
+//		}
+//		Piece p = board.get(new FileRank('e', 2));
+//		Piece p2 = phantomBoard.get(new FileRank('e', 2));
+//		phantomBoard.move(new FileRank('e', 2), new FileRank('e', 4));
+//		board.printBoard();
+//		phantomBoard.printBoard();
+//		System.out.println(p.hasMoved());
+//		System.out.println(p2.hasMoved());
+//		
+		// if one of the moves while testing the pseudolegals captures a piece, i want to make sure the enemy piece
+		// does not actually leave bPieces or wPieces
+		// i could do this by checking if the end filerank is null and then if not, we add it back to whatever list it belongs to
+//		testLoop();
 		gameLoop();
 	}
 	
@@ -80,15 +105,16 @@ public class Chess {
 					currentTeam = 'w';
 				}
 				
-//				if(board.checkForCM(currentTeam)) {
-//					gameOn = false;
-//				}
+				if(board.checkForCM(currentTeam)) {
+					gameOn = false;
+				}
 			} else {
 				System.out.println("Illegal move, try again");
 				illegalMove = true;
 			}
 		}
 		sc.close();
+		System.out.println(team + " wins");
 	}
 	
 	private static boolean isResign(String input) {
