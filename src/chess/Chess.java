@@ -80,7 +80,7 @@ public class Chess {
 					currentTeam = 'w';
 				}
 				
-//				if(board.checkForWin()) {
+//				if(board.checkForCM(currentTeam)) {
 //					gameOn = false;
 //				}
 			} else {

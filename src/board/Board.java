@@ -15,12 +15,16 @@ public class Board {
 	ArrayList<Piece> bPieces = new ArrayList<Piece>();
 	ArrayList<Pawn> pawns = new ArrayList<Pawn> ();
 	Piece[][] board = new Piece[8][8];
-	private char file[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+	private char files[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
 	private int turn; // XXX may delete this field and its relating methods
 	
 	static class Move {
 		FileRank start;
 		FileRank end;
+		public Move(FileRank start, FileRank end) {
+			this.start = start;
+			this.end = end;
+		}
 	}
 	
 	/**
@@ -50,7 +54,7 @@ public class Board {
 		for(int i = 0; i < 2; i++) { // adds all black pieces to array
 			for(int j = 0; j < 8; j++) {
 				Piece currentPiece = board[i][j];
-				currentPiece.setLoc(new FileRank(file[j], 8 - i));
+				currentPiece.setLoc(new FileRank(files[j], 8 - i));
 				bPieces.add(currentPiece);
 				
 			}
@@ -74,7 +78,7 @@ public class Board {
 		for(int i = 7; i > 5; i--) {
 			for(int j = 0; j < 8; j++) {
 				Piece currentPiece = board[i][j];
-				currentPiece.setLoc(new FileRank(file[j], 8 - i));
+				currentPiece.setLoc(new FileRank(files[j], 8 - i));
 				wPieces.add(currentPiece);
 			}
 		}
@@ -108,8 +112,8 @@ public class Board {
 		board[rank][file] = piece;
 	}
 	private int indexOf(String c) {
-		for(int i = 0; i < file.length; i++) {
-			if(c.charAt(0) == file[i]) return i;
+		for(int i = 0; i < files.length; i++) {
+			if(c.charAt(0) == files[i]) return i;
 		}
 		return -1;
 	}
@@ -201,6 +205,56 @@ public class Board {
 		return false;
 	}
 	
+	public boolean checkForCM(char team) {
+		ArrayList<Piece> pieces;
+		Piece king = null;
+		if(team == 'w') { // if the team that has to move this turn is in check
+			pieces = wPieces;
+			for(int i = 0; i < wPieces.size(); i++) { // find the king
+				if(wPieces.get(i) instanceof King) {
+					king = wPieces.get(i);
+					break;
+				}
+			}
+		} else {
+			pieces = bPieces;
+			for(int i = 0; i < bPieces.size(); i++) { // find the king
+				if(bPieces.get(i) instanceof King) {
+					king = bPieces.get(i);
+					break;
+				}
+			}
+		}
+		// First: generate a list of every legal move move
+		ArrayList<Move> everyMove = new ArrayList<Move>();
+		for(int i = 0; i < pieces.size(); i++) { // for every piece
+			
+			Piece currentPiece = pieces.get(i);
+			FileRank start = currentPiece.getLoc();
+			
+			for(char file: files) { // go through all possible files
+				
+				for(int rank = 1; rank <= 8; rank++) { // go through all possible ranks
+					
+					FileRank fr = new FileRank(file, rank);
+					if(currentPiece.isValidMove(start, fr)) {
+						everyMove.add(new Move(start, fr));
+					}
+					
+				}
+			}
+		}
+		Board phantomBoard = new Board();
+//		for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
+//			for(int j = 0; j < phantomBoard.board.length; j++) {
+//				Piece p = null;
+//			//	phantomBoard.board[i][j] = p;
+//			}
+//		}
+		
+		return true;
+	}
+	
 	/**
 	 * If it is the turn after a pawn moved 2 squares on the other team, en passant can
 	 * be performed.  This means, at the end of every turn, we must set every pawn's
@@ -235,7 +289,7 @@ public class Board {
 			System.out.println(" " + (8 - i));
 		}
 		for(int i = 0; i < 8; i++) {
-			System.out.print(" " + file[i] + " ");
+			System.out.print(" " + files[i] + " ");
 		}
 		System.out.println("\n");
 	}

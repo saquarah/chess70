@@ -75,5 +75,5 @@ public abstract class Piece {
 	public void move(FileRank start, FileRank end) {
 		// can capture
 	}
-	
+
 }
