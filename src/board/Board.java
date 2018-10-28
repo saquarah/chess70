@@ -139,6 +139,27 @@ public class Board {
 		if(get(start) != null) {
 			if(get(start).isValidMove(start, end)) {
 				Piece movingPiece = get(start);
+				//castling occurred moving rook
+				if(movingPiece instanceof King) {
+					System.out.println("in moving");
+					if(start.getFile()=='e' && start.getRank()==1 && end.getFile()=='g' && end.getRank()==1) {
+						System.out.println("In case1");
+						move(new FileRank('h',1), new FileRank('f',1));
+					}
+					else if(start.getFile()=='e' && start.getRank()==8 && end.getFile()=='g' && end.getRank()==8) {
+						System.out.println("In case2");
+						move(new FileRank('h',8), new FileRank('f',8));
+					}
+					else if(start.getFile()=='e' && start.getRank()==1 && end.getFile()=='c' && end.getRank()==1) {
+						System.out.println("In case3");
+						move(new FileRank('a',1), new FileRank('d',1));
+					}
+					else if(start.getFile()=='e' && start.getRank()==8 && end.getFile()=='c' && end.getRank()==8) {
+						System.out.println("In case4");
+						move(new FileRank('a',8), new FileRank('d',8));
+					}
+					
+				}
 				set(start, null);
 				if(movingPiece instanceof Pawn) { // This is to check if an en passant occurred
 					Pawn movingPawn = (Pawn) movingPiece; // it's special bc en passant is the only move where you end not
