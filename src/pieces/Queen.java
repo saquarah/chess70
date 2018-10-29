@@ -9,7 +9,10 @@ public class Queen extends Piece {
 	}
 	@Override
 	public boolean isValidMove(FileRank start, FileRank end) {
-		
+//		if(team == 'w') {
+//		Piece.getBoard().printBoard();
+//		System.out.println(team + " TEAM");
+//		}
 		if(inRooksPath(start, end)) {
 			return true;
 		} else if (inBishopsPath(start, end)) {
@@ -67,7 +70,7 @@ public class Queen extends Piece {
 		return false;
 	}
 	private boolean inBishopsPath(FileRank start, FileRank end) {
-		
+
 		if(Piece.getBoard().get(end)!= null && Piece.getBoard().get(end).getTeam() == team) {
 			//System.out.println("end is friend");
 			return false;
@@ -81,11 +84,15 @@ public class Queen extends Piece {
 		if( Math.abs(a)!=Math.abs(b) ) {
 			return false;
 		}
-		char t_f = (char) ((int)s_f+1);
-		int t_r = s_r+1;
+		
+		//this part is causing issue: 
+		char t_f = (char) ((int)s_f);
+		int t_r = s_r;
 		
 		//case 1
 		if(a<0 && b<0) {
+			t_f++;
+			t_r++;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
@@ -95,10 +102,13 @@ public class Queen extends Piece {
 				}
 				t_f++;
 				t_r++;
+				
 			}
 		}
 		//case 2
 		else if(a<0 && b>0) {
+			t_f++;
+			t_r--;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
@@ -111,10 +121,13 @@ public class Queen extends Piece {
 		}
 		//case 3
 		else if(a>0 && b>0) {
+			t_f--;
+			t_r--;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
+				//System.out.println(t);
 				if(Piece.getBoard().get(t)!=null) {
-					System.out.println("false in case 3");
+//					System.out.println("false in case 3");
 					return false;
 				}
 				t_f--;
@@ -123,6 +136,8 @@ public class Queen extends Piece {
 		}
 		//case 4
 		else if(a>0 && b<0) {
+			t_f--;
+			t_r++;
 			while(t_f!=e_f && t_r!=e_r) {
 				FileRank t = new FileRank(t_f,t_r);
 				if(Piece.getBoard().get(t)!=null) {
