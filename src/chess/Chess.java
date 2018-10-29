@@ -10,27 +10,30 @@ import pieces.Piece;
 public class Chess {
 	
 	public static void main(String[] args) {
-//		
+//		testLoop();
 //		Board board = new Board();
-//		Board phantomBoard = new Board();
-//		for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
-//			for(int j = 0; j < phantomBoard.board.length; j++) {
-//				Piece p = null;
-//				if(board.board[i][j] != null) {
-//					p = board.board[i][j].clone();
-//					p.setLoc(new FileRank(p.getLoc().getFile(), p.getLoc().getRank()));
-//				}
-//				phantomBoard.board[i][j] = p;
-//			}
-//		}
-//		Piece p = board.get(new FileRank('e', 2));
-//		Piece p2 = phantomBoard.get(new FileRank('e', 2));
-//		phantomBoard.move(new FileRank('e', 2), new FileRank('e', 4));
+//		System.out.println("Real");
 //		board.printBoard();
-//		phantomBoard.printBoard();
-//		System.out.println(p.hasMoved());
-//		System.out.println(p2.hasMoved());
+//		System.out.println("Pieces");
+//		Piece.getBoard().printBoard();
+//		board.move(new FileRank('e', 2), new FileRank('e', 4));
+//		System.out.println("real");
+//		board.printBoard();
+//		System.out.println("pieces");
+//		Piece.getBoard().printBoard();
+//		board.move(new FileRank('f', 7), new FileRank('f', 5));
+//		System.out.println("real");
+//		board.printBoard();
+//		System.out.println("pieces");
+//		Piece.getBoard().printBoard();
+//		board.move(new FileRank('d', 1), new FileRank('h', 5));
+//		System.out.println("real");
+//		board.printBoard();
+//		System.out.println("pieces");
+//		Piece.getBoard().printBoard();
 //		
+//		System.out.println(board.inCheck('b'));
+//		System.out.println(board.checkForCM('b'));
 		// if one of the moves while testing the pseudolegals captures a piece, i want to make sure the enemy piece
 		// does not actually leave bPieces or wPieces
 		// i could do this by checking if the end filerank is null and then if not, we add it back to whatever list it belongs to
@@ -55,6 +58,12 @@ public class Chess {
 		while(gameOn) {
 			if(!illegalMove)
 				board.printBoard();
+//			if(currentTeam == 'b') {
+//				Piece.getBoard().printBoard();;
+//			}
+			if(board.inCheck(currentTeam)) {
+				System.out.println("Check");
+			}
 			System.out.print(team + "'s move: ");
 			
 			String input = sc.nextLine();
@@ -64,9 +73,7 @@ public class Chess {
 			// f7 f6
 			// d1 h5
 			// c7 c6
-			if(board.inCheck(currentTeam)) {
-				System.out.println("Check");
-			}
+
 			StringTokenizer st = new StringTokenizer(input, " ");
 			
 			
@@ -94,7 +101,10 @@ public class Chess {
 				System.out.println("Error: cannot control a piece on the other team");
 				continue;
 			}
-			
+			// move:
+			//e2 e4
+			//f7 f5
+			//d1 h5
 			if(board.move(frStart, frEnd)) {
 				illegalMove = false;
 				if(team.equals("White")) {
@@ -139,32 +149,46 @@ public class Chess {
 	private static void testLoop() {
 		Board board = new Board();
 		Scanner sc = new Scanner(System.in);
-		
+		board.put(new FileRank('g', 7), new FileRank('a', 3));
+		board.put(new FileRank('h', 7), new FileRank('b', 3));
+		board.put(new FileRank('h', 8), new FileRank('a', 4));
 		while(true) {
 			board.printBoard();
 			if(board.inCheck('b')) {
 				System.out.println("B is in check");
 			}
-			System.out.print("Start: ");
-			String start = sc.nextLine();
-			System.out.print("End: ");
-			String end = sc.nextLine();
-			FileRank frStart = new FileRank(start.charAt(0), Character.getNumericValue(start.charAt(1)));
-			FileRank frEnd = new FileRank(end.charAt(0), Character.getNumericValue(end.charAt(1)));
+			System.out.println("B in checkmate: " + board.checkForCM('b'));
+			System.out.print("move: ");
+			String input = sc.nextLine();
+			StringTokenizer st = new StringTokenizer(input, " ");
+			String startStr = null;
+			FileRank frStart = null;
+			String endStr = null;
+			FileRank frEnd = null;
+			try {
+				startStr = st.nextToken(); 
+				frStart = getFileRank(startStr);
+				
+				endStr = st.nextToken();
+				frEnd = getFileRank(endStr);
+			} catch(NoSuchElementException e) {
+				System.out.println("Invalid input");
+				continue;
+			}
 			System.out.println();
 			board.move(frStart, frEnd);
 		}
 	}
 }
-// bR bN bB bQ bK bB bN bR  8
-// bp bp bp bp bp bp bp bp  7
-//    ##    ##    ##    ##  6
-// ##    ##    ##    ##     5
-//    ##    ##    ##    ##  4
-// ##    ##    ##    ##     3
-// wp wp wp wp wp wp wp wp  2
-// wR wN wB wQ wK wB wN wR  1
-//  a  b  c  d  e  f  g  h 
+//bR bN bB bQ bK bB bN bR  8
+//## bp bp bp bp    ##     7
+//bp ##    ##    ## wQ bp  6
+//##    ##    ## bp ##     5
+//   ##    ## wp ##    ##  4
+//wp    ##    ##    ##     3
+//   wp wp wp    wp wp wp  2
+//wR wN wB    wK wB wN wR  1
+// a  b  c  d  e  f  g  h 
 
 // a1 translates to [7][0]
 // so if a = 7, b = 6, c = 5, d = 4, e = 3, f = 2, g = 1, h = 0

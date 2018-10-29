@@ -8,7 +8,7 @@ import board.FileRank;
 public abstract class Piece implements Cloneable{
 	char team;
 	private char type;
-	private static Board board; // This is the same board created for the game. It will be used to determine legal moves, etc.
+	static Board board; // This is the same board created for the game. It will be used to determine legal moves, etc.
 	private static ArrayList<Piece> wPieces;
 	private static ArrayList<Piece> bPieces;
 	private boolean hasMoved;
@@ -64,8 +64,8 @@ public abstract class Piece implements Cloneable{
 	}
 	
 	public String toString() {
-		String p = team + "" + type + "\n";
-		p += loc;
+		String p = team + "" + type + ":  ";
+		p += loc.getFile() + "" + loc.getRank();
 		return p;
 	}
 	

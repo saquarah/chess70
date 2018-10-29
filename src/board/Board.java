@@ -25,6 +25,9 @@ public class Board {
 			this.start = start;
 			this.end = end;
 		}
+		public String toString() {
+			return "Start: " + start.file + "" + start.rank + "\n" + "End: " + end.file + "" + end.rank;
+		}
 	}
 	
 	/**
@@ -141,7 +144,7 @@ public class Board {
 				Piece movingPiece = get(start);
 				//castling occurred moving rook
 				if(movingPiece instanceof King) {
-					System.out.println("in moving");
+			//		System.out.println("in moving"); // stop leaving print statements lol
 					if(start.getFile()=='e' && start.getRank()==1 && end.getFile()=='g' && end.getRank()==1) {
 						System.out.println("In case1");
 						move(new FileRank('h',1), new FileRank('f',1));
@@ -220,6 +223,9 @@ public class Board {
 		}
 		for(int i = 0; i < enemyTeam.size(); i++) {
 			Piece enemyPiece = enemyTeam.get(i);
+//			if(enemyPiece instanceof Queen) {
+//				enemyPiece.getBoard().printBoard();
+//			}
 			if(enemyPiece.isValidMove(enemyPiece.getLoc(), king.getLoc())) {
 				return true;
 			}
@@ -232,6 +238,7 @@ public class Board {
 		Piece king = null;
 		if(team == 'w') { // if the team that has to move this turn is in check
 			pieces = wPieces;
+			
 		} else {
 			pieces = bPieces;
 		}
@@ -240,7 +247,7 @@ public class Board {
 		
 		
 
-		ArrayList<Move> everyMove = new ArrayList<Move>(); 									// make a list of every possible move
+		ArrayList<Move> everyMove = new ArrayList<Move>();// make a list of every legal move on the real board
 		for(int i = 0; i < pieces.size(); i++) { // for every piece
 			
 			Piece currentPiece = pieces.get(i);
@@ -266,21 +273,44 @@ public class Board {
 		
 		for(Move move: everyMove) {
 			Board phantomBoard = new Board();
+			phantomBoard.wPieces = new ArrayList<Piece>();
+			phantomBoard.bPieces = new ArrayList<Piece>();
 			for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
 				for(int j = 0; j < phantomBoard.board.length; j++) {
-					Piece p = board[i][j].clone();
+					if(board[i][j] == null) {
+						phantomBoard.board[i][j] = null;
+						continue;
+					}
+					Piece p;
+					p = board[i][j].clone();
+					if(p.getTeam() == 'w') {
+						phantomBoard.wPieces.add(p);
+					} else {
+						phantomBoard.bPieces.add(p);
+					}
+//					if(p instanceof Queen) {
+//						System.out.println("queen");
+//					}
 					p.setLoc(new FileRank(p.getLoc().file, p.getLoc().rank));
 					phantomBoard.board[i][j] = p;
 				}
 			}
 			phantomBoard.move(move.start, move.end);
-			if(!inCheck(team)) {
+	//		System.out.println("PHAN Checking for checkmate on this Piece: " + phantomBoard.get(move.start));
+	//		System.out.println();
+//			if(move.start.getFile() == 'e' && move.start.getRank() == 8 && move.end.getFile() == 'f' && move.end.getRank() == 7) {
+//				System.out.println("Debug place");
+//			}
+			if(!phantomBoard.inCheck(team)) {
+		//		System.out.println("Phantom BOard");
+		//		phantomBoard.printBoard();
+				Piece.setBoard(this);
 				return false;
 			}
 			
 		}
 
-		
+		Piece.setBoard(this);
 		return true;
 	}
 	
