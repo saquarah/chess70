@@ -68,7 +68,7 @@ public class Chess {
 				String[] inputtokens = input.split(" ");
 				promoChar = inputtokens[2].charAt(0);
 			}
-			System.out.println(promoChar);
+		//	System.out.println(promoChar);
 			if(currentTeam == 'b') {
 				drawAns = isDrawAnswer(input, whiteDrawQuestion);
 				whiteDrawQuestion = false;
@@ -100,7 +100,7 @@ public class Chess {
 			// f7 f6
 			// d1 h5
 			// c7 c6
-
+			System.out.println();
 			StringTokenizer st = new StringTokenizer(input, " ");
 			
 			
@@ -132,9 +132,9 @@ public class Chess {
 			//e2 e4
 			//f7 f5
 			//d1 h5
-			if(frStart.equals(new FileRank('f', 2)) && frEnd.equals(new FileRank('f', 3))) {
-				System.out.println("debug point");
-			}
+//			if(frStart.equals(new FileRank('f', 2)) && frEnd.equals(new FileRank('f', 3))) {
+//				System.out.println("debug point");
+//			}
 			if(board.move(frStart, frEnd)) {
 				Piece newPromoPiece = null;
 				if(board.get(frEnd) instanceof Pawn) {
