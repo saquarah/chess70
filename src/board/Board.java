@@ -30,6 +30,24 @@ public class Board {
 		}
 	}
 	
+	public ArrayList<Piece> getwPieces() {
+		return wPieces;
+	}
+	public void setwPieces(ArrayList<Piece> wPieces) {
+		this.wPieces = wPieces;
+	}
+	public ArrayList<Piece> getbPieces() {
+		return bPieces;
+	}
+	public void setbPieces(ArrayList<Piece> bPieces) {
+		this.bPieces = bPieces;
+	}
+	public ArrayList<Pawn> getPawns() {
+		return pawns;
+	}
+	public void setPawns(ArrayList<Pawn> pawns) {
+		this.pawns = pawns;
+	}
 	/**
 	 * Instantiates Board object filling it with chess pieces.
 	 * turn num

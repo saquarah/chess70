@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 import board.Board;
 import board.FileRank;
-import pieces.Piece;
+import pieces.*;
 public class Chess {
 	
 	public static void main(String[] args) {
@@ -45,6 +45,12 @@ public class Chess {
 		String endStr;
 		FileRank frEnd;
 		
+		boolean whiteDrawQuestion = false;
+		boolean blackDrawQuestion = false;
+		boolean drawAns = false;
+		boolean isResign = false;
+		boolean isExplicitPromotion = false;
+		char promoChar = 'd';
 		while(gameOn) {
 			if(!illegalMove)
 				board.printBoard();
@@ -57,6 +63,37 @@ public class Chess {
 			System.out.print(team + "'s move: ");
 			
 			String input = sc.nextLine();
+			isExplicitPromotion = isExplicitPromo(input);
+			if(isExplicitPromotion) {
+				String[] inputtokens = input.split(" ");
+				promoChar = inputtokens[2].charAt(0);
+			}
+			System.out.println(promoChar);
+			if(currentTeam == 'b') {
+				drawAns = isDrawAnswer(input, whiteDrawQuestion);
+				whiteDrawQuestion = false;
+			} else {
+				drawAns = isDrawAnswer(input, blackDrawQuestion);
+				blackDrawQuestion = false;
+			}
+			if(currentTeam == 'w') {
+				whiteDrawQuestion = isDrawQuestion(input);
+			} else {
+				blackDrawQuestion = isDrawQuestion(input);
+			}
+			if(drawAns) {
+				break;
+				
+			}
+			isResign = isResign(input);
+			if(isResign) {
+				if(currentTeam == 'w') {
+					team = "Black";
+				} else {
+					team = "White";
+				}
+				break;
+			}
 			// resign & draw detection should go here
 			// or after tokenizer creation
 			// e2 e4
@@ -99,6 +136,69 @@ public class Chess {
 				System.out.println("debug point");
 			}
 			if(board.move(frStart, frEnd)) {
+				Piece newPromoPiece = null;
+				if(board.get(frEnd) instanceof Pawn) {
+					Pawn pawn = (Pawn) board.get(frEnd);
+					if(pawn.getTeam() == 'w') {
+						if(frEnd.getRank() == 8) { // a promotion occurred
+							switch(promoChar) {
+								case 'd':
+									newPromoPiece = (Piece) new Queen('w', 'Q');
+									break;
+								case 'Q':
+									newPromoPiece = (Piece) new Queen('w', 'Q');
+									break;
+								case 'B':
+									newPromoPiece = (Piece) new Bishop('w', 'B');
+									break;
+								case 'R':
+									newPromoPiece = (Piece) new Rook('w', 'R');
+									break;
+								case 'N':
+									newPromoPiece = (Piece) new Knight('w', 'N');
+									break;
+								default:
+									newPromoPiece = (Piece) new Queen('w', 'Q');
+							}
+							newPromoPiece.setHasMoved(true);	 
+							newPromoPiece.setLoc(frEnd);
+							board.getwPieces().remove(board.get(frEnd)); // remove the pawn
+							board.getPawns().remove(board.get(frEnd));
+							board.set(frEnd, newPromoPiece);
+							board.getwPieces().add(newPromoPiece);
+							Piece.setBoard(board);
+						}
+					} else {
+						if(frEnd.getRank() == 1) { // promo
+								switch(promoChar) {
+								case 'd':
+									newPromoPiece = (Piece) new Queen('b', 'Q');
+									break;
+								case 'Q':
+									newPromoPiece = (Piece) new Queen('b', 'Q');
+									break;
+								case 'B':
+									newPromoPiece = (Piece) new Bishop('b', 'B');
+									break;
+								case 'R':
+									newPromoPiece = (Piece) new Rook('b', 'R');
+									break;
+								case 'N':
+									newPromoPiece = (Piece) new Knight('b', 'N');
+									break;
+								default:
+									newPromoPiece = (Piece) new Queen('b', 'Q');
+							}
+							newPromoPiece.setHasMoved(true);
+							newPromoPiece.setLoc(frEnd);
+							board.getbPieces().remove(board.get(frEnd));
+							board.getPawns().remove(board.get(frEnd));
+							board.set(frEnd, newPromoPiece);
+							board.getbPieces().add(newPromoPiece);
+							Piece.setBoard(board);
+						}
+					}
+				}
 				illegalMove = false;
 				if(team.equals("White")) {
 					team = "Black";
@@ -121,18 +221,53 @@ public class Chess {
 				System.out.println("Illegal move, try again");
 				illegalMove = true;
 			}
+			promoChar = 'd';
+		}
+		if(drawAns) {
+			// draw
+			sc.close();
+			return;
 		}
 		sc.close();
 		System.out.println(team + " wins");
 	}
 	
 	private static boolean isResign(String input) {
+		if(input.equals("resign")) {
+			return true;
+		}
 		return false;
 	}
 	private static boolean isDrawQuestion(String input) {
+		String[] inputTokens = input.split(" ");
+		if(inputTokens.length < 3) {
+			return false;
+		} else {
+			if(inputTokens[2].equals("draw?")) {
+				return true;
+			}
+		}
 		return false;
 	}
-	private static boolean isDrawAnswer(String input) {
+	private static boolean isDrawAnswer(String input, boolean drawQuestion) {
+		if(drawQuestion && input.equals("draw")) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static boolean isExplicitPromo(String input) {
+		String[] inputTokens = input.split(" ");
+		if (inputTokens.length >= 3) {
+			if(inputTokens[2].length() > 1) {
+				return false;
+			} else {
+				char ch = inputTokens[2].charAt(0);
+				if(ch == 'N' || ch == 'Q' || ch == 'R' || ch == 'B') {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	
