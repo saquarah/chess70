@@ -132,6 +132,106 @@ public class Board {
 		set(start, null);
 		movingPiece.setLoc(end);
 	}
+	private King findKing(char team) {
+		if(team == 'w') {
+			for(int i = 0; i < wPieces.size(); i++) {
+				if(wPieces.get(i) instanceof King) {
+					return (King) wPieces.get(i);
+				}
+			}
+		} else {
+			for(int i = 0; i < bPieces.size(); i++) {
+				if(bPieces.get(i) instanceof King) {
+					return (King) bPieces.get(i);
+				}
+			}
+		}
+		return null; // theoretically shouldnt happen
+	}
+	public void otherMove(FileRank start, FileRank end) {
+		if(get(start) != null) {
+			if(get(start).isValidMove(start, end)) {
+				Piece movingPiece = get(start);
+				
+//				Board phantomBoard = copyBoard();
+//				phantomBoard.move(start, end); // this doesn't work bc recursion
+//				if(phantomBoard.inCheck(movingPiece.getTeam())) {
+//					Piece.setBoard(this);
+//					return false;
+//				}
+//				Piece.setBoard(this);
+//				King thisTeamsKing = findKing(movingPiece.getTeam());
+				
+//				if(underAttack(thisTeamsKing.getLoc(), thisTeamsKing.getTeam())) {
+//					/*
+//					 * okay so this is flawed because the movingPiece hasn't actually moved yet. so in the pawn ex
+//					 * the pawn is at first protecting the king. what we need to do is make a phantom board again to simulate the move
+//					 * using the same way it was done in the checkmate algorithm. and then use inCheck on that.
+//					 */q2w22223333333333333333333333333333333333333333333333333333333333333w
+//					return false;
+//				}
+				if(movingPiece instanceof King) {
+	
+//			    	if(underAttack(end, movingPiece.getTeam())) { // can't move a king to a place where it'll be check
+//			    		return;
+//			    	}
+			//		System.out.println("in moving");
+					if(start.getFile()=='e' && start.getRank()==1 && end.getFile()=='g' && end.getRank()==1) {
+			//			System.out.println("In case1");
+						move(new FileRank('h',1), new FileRank('f',1));
+					}
+					else if(start.getFile()=='e' && start.getRank()==8 && end.getFile()=='g' && end.getRank()==8) {
+			//			System.out.println("In case2");
+						move(new FileRank('h',8), new FileRank('f',8));
+					}
+					else if(start.getFile()=='e' && start.getRank()==1 && end.getFile()=='c' && end.getRank()==1) {
+			//			System.out.println("In case3");
+						move(new FileRank('a',1), new FileRank('d',1));
+					}
+					else if(start.getFile()=='e' && start.getRank()==8 && end.getFile()=='c' && end.getRank()==8) {
+			//			System.out.println("In case4");
+						move(new FileRank('a',8), new FileRank('d',8));
+					}
+					
+				}
+				set(start, null);
+				if(movingPiece instanceof Pawn) { // This is to check if an en passant occurred
+					Pawn movingPawn = (Pawn) movingPiece; // it's special bc en passant is the only move where you end not
+					if (movingPawn.getEnPassantLoc() != null) { // on the same space as the piece you capped.
+						Pawn target = (Pawn) get(movingPawn.getEnPassantLoc());
+						if (target.getTeam() == 'w') {
+							wPieces.remove(target);
+						} else {
+							bPieces.remove(target);
+						}
+						pawns.remove(target);
+						set(movingPawn.getEnPassantLoc(), null);
+						movingPawn.setEnPassantLoc(null);
+					}
+				}
+				if(get(end) != null) { // this indicates a piece is getting cap'd
+					// implement later
+					Piece dyingPiece = get(end);
+					if(dyingPiece instanceof Pawn) {
+						pawns.remove(dyingPiece);
+					}
+					if(dyingPiece.getTeam() == 'w') {
+						wPieces.remove(dyingPiece);
+					} else {
+						bPieces.remove(dyingPiece);
+					}
+				}
+				set(end, movingPiece);
+				movingPiece.setLoc(end);
+				movingPiece.setHasMoved(true);
+				updatePieces(movingPiece);
+				return;
+			}
+		
+		} else {
+			return;
+		}
+	}
 	/**
 	 * Moves the piece from start to the end, capturing the piece at
 	 * FileRank end.
@@ -142,8 +242,29 @@ public class Board {
 		if(get(start) != null) {
 			if(get(start).isValidMove(start, end)) {
 				Piece movingPiece = get(start);
-				//castling occurred moving rook
+				
+				Board phantomBoard = copyBoard();
+				phantomBoard.otherMove(start, end); // this doesn't work bc recursion
+				if(phantomBoard.inCheck(movingPiece.getTeam())) {
+					Piece.setBoard(this);
+					return false;
+				}
+				Piece.setBoard(this);
+				King thisTeamsKing = findKing(movingPiece.getTeam());
+				
+//				if(underAttack(thisTeamsKing.getLoc(), thisTeamsKing.getTeam())) {
+//					/*
+//					 * okay so this is flawed because the movingPiece hasn't actually moved yet. so in the pawn ex
+//					 * the pawn is at first protecting the king. what we need to do is make a phantom board again to simulate the move
+//					 * using the same way it was done in the checkmate algorithm. and then use inCheck on that.
+//					 */q2w22223333333333333333333333333333333333333333333333333333333333333w
+//					return false;
+//				}
 				if(movingPiece instanceof King) {
+	
+			    	if(underAttack(end, movingPiece.getTeam())) { // can't move a king to a place where it'll be check
+			    		return false;
+			    	}
 			//		System.out.println("in moving");
 					if(start.getFile()=='e' && start.getRank()==1 && end.getFile()=='g' && end.getRank()==1) {
 			//			System.out.println("In case1");
@@ -202,11 +323,19 @@ public class Board {
 	}
 	public boolean underAttack(FileRank fr, char team) {
 		ArrayList<Piece> enemyTeam;
+		Piece dummyPiece = null;
+		boolean usingDummy = false;
 		if(team == 'w') { // if the team that has to move this turn is in check
 			enemyTeam = bPieces;
-
+			dummyPiece = new Pawn('w', 'd');
 		} else {
 			enemyTeam = wPieces;
+			dummyPiece = new Pawn('b', 'd');
+		}
+		if(get(fr) == null) {
+			usingDummy = true;
+			dummyPiece.setLoc(fr);
+			set(fr, dummyPiece);
 		}
 		for(int i = 0; i < enemyTeam.size(); i++) {
 			Piece enemyPiece = enemyTeam.get(i);
@@ -214,9 +343,21 @@ public class Board {
 //				enemyPiece.getBoard().printBoard();
 //			}
 			if(enemyPiece.isValidMove(enemyPiece.getLoc(), fr)) {
-				return true;
+				if(enemyPiece instanceof Pawn) {
+					Pawn enemyPawn = (Pawn) enemyPiece;
+					if(enemyPawn.isCapture(enemyPiece.getLoc(), fr)) {
+						set(fr, null); // get rid of dummy
+						return true;
+					}
+				} else {
+					if(usingDummy)
+						set(fr, null); // get rid of dummy
+					return true;
+				}
 			}
 		}
+		if(usingDummy)
+			set(fr, null); // get rid of dum
 		return false;
 	}
 	public boolean inCheck(char team) {
@@ -345,6 +486,33 @@ public class Board {
 				pawns.get(i).setJustMoved2Squares(false);
 			}
 		}
+	}
+	
+	public Board copyBoard() {
+		Board phantomBoard = new Board();
+		phantomBoard.wPieces = new ArrayList<Piece>();
+		phantomBoard.bPieces = new ArrayList<Piece>();
+		for(int i = 0; i < phantomBoard.board.length; i++) { // copy the real board
+			for(int j = 0; j < phantomBoard.board.length; j++) {
+				if(board[i][j] == null) {
+					phantomBoard.board[i][j] = null;
+					continue;
+				}
+				Piece p;
+				p = board[i][j].clone();
+				if(p.getTeam() == 'w') {
+					phantomBoard.wPieces.add(p);
+				} else {
+					phantomBoard.bPieces.add(p);
+				}
+//				if(p instanceof Queen) {
+//					System.out.println("queen");
+//				}
+				p.setLoc(new FileRank(p.getLoc().file, p.getLoc().rank));
+				phantomBoard.board[i][j] = p;
+			}
+		}
+		return phantomBoard;
 	}
 	/**
 	 * Prints the chessboard in the required format

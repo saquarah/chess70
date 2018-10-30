@@ -89,6 +89,9 @@ public class Pawn extends Piece {
 	}
 	private boolean is2SquareMove (FileRank start, FileRank end) {
 		if(!this.hasMoved()) {
+			if(Piece.getBoard().get(end) != null) {
+				return false;
+			}
 			if(team == 'w') { // if white capping black
 				if (end.getRank() - start.getRank() == 2 && start.getFile() == end.getFile()) { // pawn moved 
 					return true;
@@ -101,7 +104,7 @@ public class Pawn extends Piece {
 		}
 		return false;
 	}
-	private boolean isCapture (FileRank start, FileRank end) {
+	public boolean isCapture (FileRank start, FileRank end) {
 		
 		
 		if(isEnPassant(start, end)) {

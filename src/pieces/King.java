@@ -12,9 +12,7 @@ public class King extends Piece{
     @Override
     public boolean isValidMove(FileRank start, FileRank end) {
         // TODO Auto-generated method stub
-    	if(Piece.getBoard().underAttack(end, this.team)) { // can't move a king to a place where it'll be checkmate
-    		return false;
-    	}
+
         if(Piece.getBoard().get(end)!= null && Piece.getBoard().get(end).getTeam() == team) {
             //System.out.println("end is friend");
             return false;
@@ -34,9 +32,10 @@ public class King extends Piece{
         //castling
         
         //TODO: call check method to see if king already in check then return false
-        if(Piece.getBoard().inCheck(this.team)) { // can't castle if the king is in check
-        	return false;
-        }
+        //THIS CANNOT HAPPEN HERE OR ELSE WE GET STACK OVERFLOW. LET'S SEE IF IT WORKS IN BOARD'S MOVE METHOD
+//        if(Piece.getBoard().inCheck(this.team)) { // can't castle if the king is in check
+//        	return false;
+//        }
         
         //case 1: white king on e1 and Rook on h1
         

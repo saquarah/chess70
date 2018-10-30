@@ -12,26 +12,16 @@ public class Chess {
 	public static void main(String[] args) {
 //		testLoop();
 //		Board board = new Board();
-//		System.out.println("Real");
-//		board.printBoard();
-//		System.out.println("Pieces");
-//		Piece.getBoard().printBoard();
+//
 //		board.move(new FileRank('e', 2), new FileRank('e', 4));
-//		System.out.println("real");
-//		board.printBoard();
-//		System.out.println("pieces");
-//		Piece.getBoard().printBoard();
 //		board.move(new FileRank('f', 7), new FileRank('f', 5));
-//		System.out.println("real");
-//		board.printBoard();
-//		System.out.println("pieces");
-//		Piece.getBoard().printBoard();
 //		board.move(new FileRank('d', 1), new FileRank('h', 5));
-//		System.out.println("real");
+//		board.move(new FileRank('g', 1), new FileRank('f', 3));
+//		board.move(new FileRank('f', 1), new FileRank('e', 2));
 //		board.printBoard();
-//		System.out.println("pieces");
 //		Piece.getBoard().printBoard();
-//		
+//		board.move(new FileRank('e', 1), new FileRank('g', 1));a
+//		board.printBoard();
 //		System.out.println(board.inCheck('b'));
 //		System.out.println(board.checkForCM('b'));
 		// if one of the moves while testing the pseudolegals captures a piece, i want to make sure the enemy piece
@@ -81,8 +71,8 @@ public class Chess {
 			// resign
 			// draw
 			// promotion
-			// check
-			// checkmate
+			// check: done
+			// checkmate: done
 			try {
 				startStr = st.nextToken(); 
 				frStart = getFileRank(startStr);
@@ -105,6 +95,9 @@ public class Chess {
 			//e2 e4
 			//f7 f5
 			//d1 h5
+			if(frStart.equals(new FileRank('f', 2)) && frEnd.equals(new FileRank('f', 3))) {
+				System.out.println("debug point");
+			}
 			if(board.move(frStart, frEnd)) {
 				illegalMove = false;
 				if(team.equals("White")) {
@@ -201,6 +194,23 @@ public class Chess {
 // as for the rank
 // 1 = 0, 2 = 1, 3 = 2, 4 = 3, 5 = 4, 6 = 5, 7 = 6, 8 =7
 // so we can conclude that 
+
+//a2 a3
+//g7 g6
+//b2 b3
+//f8 h6
+//c2 c3
+//h6 g5
+//d2 d3
+//g5 h4
+//f2 f3 should be illegal
+
+// THIS ONE
+//f2 f4
+//e7 e5
+//e1 f2
+//e5 e4
+//f2 f3
 
 //e2 e4
 //e7 e5

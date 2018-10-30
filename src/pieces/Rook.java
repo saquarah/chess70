@@ -48,6 +48,8 @@ public class Rook extends Piece {
 				}
 			} else if (end.isToTheLeftOf(start.getFile())) {
 				for(int i = start.getFile() - 1; i > end.getFile(); i--) {
+				//	System.out.println((int) end.getFile());
+				//	System.out.println(i);
 					char file = (char) i;
 					if(Piece.getBoard().get(new FileRank(file, start.getRank())) != null) {
 						return false;
