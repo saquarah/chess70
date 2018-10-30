@@ -121,11 +121,11 @@ public class Chess {
 				continue;
 			}
 			if(board.get(frStart) == null) {
-				System.out.println("Error: no piece at given FileRank");
+				System.out.println("Illegal move, try again");
 				continue;
 			}
 			if(board.get(frStart).getTeam() != currentTeam) {
-				System.out.println("Error: cannot control a piece on the other team");
+				System.out.println("Illegal move, try again");
 				continue;
 			}
 			// move:
