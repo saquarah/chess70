@@ -1,6 +1,9 @@
 package pieces;
 
 import board.FileRank;
+/** This class represents Knight piece 
+ * @author Sarah Squillace, Nikita Zala
+ */
 
 public class Knight extends Piece {
     
@@ -10,6 +13,11 @@ public class Knight extends Piece {
     }
     
     @Override
+    /**
+     * Identifies legal moves of Knight
+     * @param takes starting and ending position of move as parameter
+     * return boolean whether or not it is a legal move for Knight
+     */
     public boolean isValidMove(FileRank start, FileRank end) {
         // TODO Auto-generated method stub
         if(Piece.getBoard().get(end)!= null && Piece.getBoard().get(end).getTeam() == team) {
