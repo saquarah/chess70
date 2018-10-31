@@ -121,10 +121,12 @@ public class Chess {
 				continue;
 			}
 			if(board.get(frStart) == null) {
+				illegalMove = true;
 				System.out.println("Illegal move, try again");
 				continue;
 			}
 			if(board.get(frStart).getTeam() != currentTeam) {
+				illegalMove = true;
 				System.out.println("Illegal move, try again");
 				continue;
 			}
