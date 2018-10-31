@@ -11,12 +11,11 @@ import pieces.Queen;
 import pieces.Rook;
 
 public class Board {
-	ArrayList<Piece> wPieces = new ArrayList<Piece>();
-	ArrayList<Piece> bPieces = new ArrayList<Piece>();
-	ArrayList<Pawn> pawns = new ArrayList<Pawn> ();
-	public Piece[][] board = new Piece[8][8]; // TODO CHANGE BACK TO PACKAGE
+	private ArrayList<Piece> wPieces = new ArrayList<Piece>();
+	private ArrayList<Piece> bPieces = new ArrayList<Piece>();
+	private ArrayList<Pawn> pawns = new ArrayList<Pawn> ();
+	Piece[][] board = new Piece[8][8]; // TODO CHANGE BACK TO PACKAGE ok did it
 	private char files[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-	private int turn; // XXX may delete this field and its relating methods
 	
 	static class Move {
 		FileRank start;
@@ -54,7 +53,6 @@ public class Board {
 	 */
 	public Board() {
 		populateBoard();
-		turn = 0;
 	}
 	private void populateBoard() { // This initializes the board with pieces
 		board[0][0] = new Rook('b', 'R');
@@ -107,9 +105,7 @@ public class Board {
 		Piece.setWPieces(wPieces);
 		Piece.setBPieces(bPieces);
 	}
-	public int getTurn() {
-		return turn;
-	}
+
 	/**
 	 * Gets the chess piece at the given FileRank location
 	 * @param fr
@@ -556,11 +552,7 @@ public class Board {
 		}
 		System.out.println("\n");
 	}
-	/**
-	 * This is just a method I created for debugging purposes, ignore.
-	 * Should be deleted later.
-	 */
-	public void clearBoard() {
+	private void clearBoard() {
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) {
 				board[i][j] = null;
