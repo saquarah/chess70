@@ -49,7 +49,6 @@ public class Board {
 	}
 	/**
 	 * Instantiates Board object filling it with chess pieces.
-	 * turn num
 	 */
 	public Board() {
 		populateBoard();
@@ -137,8 +136,8 @@ public class Board {
 	/**
 	 * Places the piece at FileRank start on FileRank end, regardless of the
 	 * legality of the move. Useful for placing the rook when the king is castling.
-	 * @param start
-	 * @param end
+	 * @param start - The FileRank where the piece is first located.
+	 * @param end - The FileRank of the destination of the piece.
 	 */
 	public void put(FileRank start, FileRank end) {
 		Piece movingPiece = get(start);
@@ -162,7 +161,7 @@ public class Board {
 		}
 		return null; // theoretically shouldnt happen
 	}
-	public void otherMove(FileRank start, FileRank end) {
+	private void otherMove(FileRank start, FileRank end) {
 		if(get(start) != null) {
 			if(get(start).isValidMove(start, end)) {
 				Piece movingPiece = get(start);
@@ -249,8 +248,8 @@ public class Board {
 	/**
 	 * Moves the piece from start to the end, capturing the piece at
 	 * FileRank end.
-	 * @param start
-	 * @param end
+	 * @param start - The FileRank where the piece starts.
+	 * @param end - 
 	 */
 	public boolean move(FileRank start, FileRank end) {
 		if(get(start) != null) {
@@ -335,6 +334,15 @@ public class Board {
 		}
 		return false;
 	}
+	/**
+	 * Detects whether a FileRank is under attack, which means an enemy piece could reach it and capture
+	 * a piece if it were occupied.
+	 * @param fr
+	 * @param team
+	 * @return  Returns true if any piece from the team opposing the parameterized team
+	 * could capture a piece on the parameterized team if it were on the 
+	 * given FileRank. False if otherwise.
+	 */
 	public boolean underAttack(FileRank fr, char team) {
 		ArrayList<Piece> enemyTeam;
 		Piece dummyPiece = null;
@@ -502,7 +510,7 @@ public class Board {
 		}
 	}
 	
-	public Board copyBoard() {
+	private Board copyBoard() {
 		Board phantomBoard = new Board();
 		phantomBoard.wPieces = new ArrayList<Piece>();
 		phantomBoard.bPieces = new ArrayList<Piece>();

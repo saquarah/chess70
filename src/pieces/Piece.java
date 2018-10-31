@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import board.Board;
 import board.FileRank;
-
+/**
+ * 
+ * @author Sarah Squillace, Nikita Zala
+ *
+ */
 public abstract class Piece implements Cloneable{
 	char team;
 	private char type;
@@ -71,9 +75,6 @@ public abstract class Piece implements Cloneable{
 	
 	public abstract boolean isValidMove(FileRank start, FileRank end);
 	
-	public void move(FileRank start, FileRank end) {
-		// can capture
-	}
 	
 	public Piece clone() {
 		try {
