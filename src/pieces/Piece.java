@@ -7,7 +7,7 @@ import board.FileRank;
 /**
  * 
  * @author Sarah Squillace, Nikita Zala
- *
+ * Abstract foundation for the Piece class
  */
 public abstract class Piece implements Cloneable{
 	char team;

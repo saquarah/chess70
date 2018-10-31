@@ -28,22 +28,45 @@ public class Board {
 			return "Start: " + start.file + "" + start.rank + "\n" + "End: " + end.file + "" + end.rank;
 		}
 	}
-	
+	/**
+	 * 
+	 * @return the ArrayList containing all white pieces still in the game.
+	 */
 	public ArrayList<Piece> getwPieces() {
 		return wPieces;
 	}
+	/**
+	 * Sets the ArrayList of white pieces.
+	 * @param wPieces The new ArrayList of white pieces.
+	 */
 	public void setwPieces(ArrayList<Piece> wPieces) {
 		this.wPieces = wPieces;
 	}
+	/**
+	 * 
+	 * @return the ArrayList containing all black pieces still in the game.
+	 */
 	public ArrayList<Piece> getbPieces() {
 		return bPieces;
 	}
+	/**
+	 * Sets the ArrayList of black pieces.
+	 * @param bPieces The new ArrayList of black pieces.
+	 */
 	public void setbPieces(ArrayList<Piece> bPieces) {
 		this.bPieces = bPieces;
 	}
+	/**
+	 * 
+	 * @return the ArrayList of all existing pawns in the game.
+	 */
 	public ArrayList<Pawn> getPawns() {
 		return pawns;
 	}
+	/**
+	 * Sets the ArrayList of all pawns.
+	 * @param pawns The new ArrayList of pawns.
+	 */
 	public void setPawns(ArrayList<Pawn> pawns) {
 		this.pawns = pawns;
 	}
@@ -107,7 +130,7 @@ public class Board {
 
 	/**
 	 * Gets the chess piece at the given FileRank location
-	 * @param fr
+	 * @param fr The given FileRank
 	 * @return The piece located at the given FileRank
 	 */
 	public Piece get(FileRank fr) {
@@ -136,8 +159,8 @@ public class Board {
 	/**
 	 * Places the piece at FileRank start on FileRank end, regardless of the
 	 * legality of the move. Useful for placing the rook when the king is castling.
-	 * @param start - The FileRank where the piece is first located.
-	 * @param end - The FileRank of the destination of the piece.
+	 * @param start The FileRank where the piece is first located.
+	 * @param end The FileRank of the destination of the piece.
 	 */
 	public void put(FileRank start, FileRank end) {
 		Piece movingPiece = get(start);
@@ -247,9 +270,10 @@ public class Board {
 	}
 	/**
 	 * Moves the piece from start to the end, capturing the piece at
-	 * FileRank end.
-	 * @param start - The FileRank where the piece starts.
-	 * @param end - 
+	 * FileRank end, but only if the move is valid.
+	 * @param start The FileRank where the piece starts.
+	 * @param end The FileRank where the piece will end at, if the move is valid.
+	 * @return true if the move is valid, false if otherwise.
 	 */
 	public boolean move(FileRank start, FileRank end) {
 		if(get(start) != null) {
@@ -337,8 +361,8 @@ public class Board {
 	/**
 	 * Detects whether a FileRank is under attack, which means an enemy piece could reach it and capture
 	 * a piece if it were occupied.
-	 * @param fr
-	 * @param team
+	 * @param fr The given FileRank
+	 * @param team The character representing the team that would be under attack ('b' if black, 'w' if white)
 	 * @return  Returns true if any piece from the team opposing the parameterized team
 	 * could capture a piece on the parameterized team if it were on the 
 	 * given FileRank. False if otherwise.
@@ -382,6 +406,12 @@ public class Board {
 			set(fr, null); // get rid of dum
 		return false;
 	}
+	/**
+	 * Detects if the parameterized team in chess
+	 * is in check by testing if their king is vulnerable.
+	 * @param team ('b' if black, 'w' if white) The team that is being tested for being in check
+	 * @return true if the parameterized team is in check, false if not.
+	 */
 	public boolean inCheck(char team) {
 		ArrayList<Piece> enemyTeam;
 		Piece king = null;
@@ -413,7 +443,12 @@ public class Board {
 		}
 		return false;
 	}
-	
+	/**
+	 * This method detects whether or not the given team is in checkmate.
+	 * @param team ('b' if black, 'w' if white)
+	 * @return true if the parameterized team is in checkmate, false if there exists a move where
+	 * their king is not in check.
+	 */
 	public boolean checkForCM(char team) {
 		ArrayList<Piece> pieces;
 		Piece king = null;
