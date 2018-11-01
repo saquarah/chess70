@@ -13,7 +13,10 @@ import pieces.*;
  * @author Sarah Squillace, Nikita Zala
  */
 public class Chess {
-	
+	/**
+	 * The main method.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 //		testLoop();
 //		Board board = new Board();
