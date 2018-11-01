@@ -47,7 +47,7 @@ public class Pawn extends Piece {
 	/**
 	 * Changes the boolean for if the Pawn had moved two squares on the previous move, used for determining if
 	 * En Passant can be performed.
-	 * @param boolean value to change whether the Pawn just moved.
+	 * @param justMoved2Squares boolean value to change whether the Pawn just moved.
 	 */
 	public void setJustMoved2Squares(boolean justMoved2Squares) {
 		this.justMoved2Squares = justMoved2Squares;
