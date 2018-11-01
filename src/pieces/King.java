@@ -1,9 +1,18 @@
 package pieces;
 
 import board.FileRank;
-
+/**
+ * This class represents the King piece, which can move up, down, left, right, and diagonal, but not 
+ * for multiple spaces like the Queen, or it can castle.
+ * @author Sarah Squillace, Nikita Zala
+ *
+ */
 public class King extends Piece{
-    
+    /**
+     * Instantiates a King object
+     * @param team char ('b' if black, 'w' if white) representation of which color the King is.
+     * @param type the char representation of which type the King is, in this case, 'K'
+     */
     public King(char team, char type) {
         super(team, type);
         // TODO Auto-generated constructor stub

@@ -1,9 +1,17 @@
 package pieces;
 
 import board.FileRank;
-
+/**
+ * Representation of the Queen piece in chess.
+ * @author Sarah Squillace, Nikita Zala
+ * 
+ */
 public class Queen extends Piece {
-
+	 /**
+     * Instantiates a Queen object
+     * @param team char ('b' if black, 'w' if white) representation of which color the Queen is.
+     * @param type the char representation of which type the Piece is, in this case, 'Q'
+     */
 	public Queen(char team, char type) {
 		super(team, type);
 	}

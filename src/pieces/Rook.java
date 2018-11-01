@@ -1,9 +1,17 @@
 package pieces;
 
 import board.FileRank;
-
+/**
+ * Representation of the Rook piece in chess.
+ * @author Sarah Squillace, Nikita Zala
+ * 
+ */
 public class Rook extends Piece {
-
+	 /**
+     * Instantiates a Rook object
+     * @param team char ('b' if black, 'w' if white) representation of which color the Rook is.
+     * @param type the char representation of which type the Piece is, in this case, 'R'
+     */
 	public Rook(char team, char type) {
 		super(team, type);
 		// TODO Auto-generated constructor stub

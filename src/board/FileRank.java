@@ -1,10 +1,10 @@
 package board;
 
 /**
- * 
- * @author Sarah Squillace, Nikita Zala
  * This class represents a location on the chess board, with a file being the columns, and the rank
  * notating the rows.
+ * @author Sarah Squillace, Nikita Zala
+ * 
  */
 public class FileRank {
 	char file; // a, b, c, d, e, f, g, h

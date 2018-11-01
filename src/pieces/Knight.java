@@ -1,12 +1,16 @@
 package pieces;
 
 import board.FileRank;
-/** This class represents Knight piece 
+/** This class represents Knight piece.
  * @author Sarah Squillace, Nikita Zala
  */
 
 public class Knight extends Piece {
-    
+    /**
+     * Instantiates a Knight object
+     * @param team char ('b' if black, 'w' if white) representation of which color the Knight is.
+     * @param type the char representation of which type the Piece is, in this case, 'N'
+     */
     public Knight(char team, char type) {
         super(team, type);
         // TODO Auto-generated constructor stub

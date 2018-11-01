@@ -1,6 +1,10 @@
 package chess;
 
 import java.util.NoSuchElementException;
+/**
+ * The main class that executes the game loop and is where the main method is located.
+ * @author Sarah Squillace, Nikita Zala
+ */
 import java.util.Scanner;
 import java.util.StringTokenizer;
 

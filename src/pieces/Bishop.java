@@ -1,9 +1,17 @@
 package pieces;
 
 import board.FileRank;
-
+/**
+ * Representation of the Bishop piece in chess.
+ * @author Sarah Squillace, Nikita Zala
+ * 
+ */
 public class Bishop extends Piece {
-
+	  /**
+     * Instantiates a Bishop object
+     * @param team char ('b' if black, 'w' if white) representation of which color the Bishop is.
+     * @param type the char representation of which type the King is, in this case, 'B'
+     */
 	public Bishop(char team, char type) {
 		super(team, type);
 		
